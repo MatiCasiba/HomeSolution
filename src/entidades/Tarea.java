@@ -4,8 +4,8 @@ public class Tarea {
 	private String titulo;
 	private String descripcion;
 	private int diasNecesarios;
-	private int diasRetraaso;
-	private Empleado empleadosAsignado;
+	private int diasRetraso;
+	private Empleado empleadoAsignado;
 	private boolean terminada;
 	
 	public Tarea(String titulo, String descripcion, int diasNecesarios) {
@@ -21,8 +21,27 @@ public class Tarea {
 		this.titulo = titulo;
 		this.descripcion = descripcion;
 		this.diasNecesarios = diasNecesarios;
-		this.diasRetraaso = 0;
-		this.empleadosAsignado = null;
+		this.diasRetraso = 0;
+		this.empleadoAsignado = null;
 		this.terminada = false;
+	}
+	
+	public String getTitulo() {
+		return titulo;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public int getDiasNecesarios() {
+		return diasNecesarios;
+	}
+	public int getDiasRetraso() {
+		return diasRetraso;
+	}
+	public Empleado getEmpleadoAsignado() {
+		return empleadoAsignado;
+	}
+	public boolean estaTerminada() {
+		return terminada;
 	}
 }
