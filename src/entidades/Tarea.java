@@ -58,4 +58,11 @@ public class Tarea {
 		this.empleadoAsignado = empleado;
 		empleado.asignar();
 	}
+	
+	public void liberarEmpleado() {
+		if(empleadoAsignado != null) {
+			empleadoAsignado.liberar();
+			empleadoAsignado = null;
+		}
+	}
 }
