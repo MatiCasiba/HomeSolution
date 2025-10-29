@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Empleado {
+public abstract class Empleado {
 	protected int legajo;
 	protected String nombre;
 	protected boolean disponible;
