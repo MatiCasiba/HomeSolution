@@ -19,4 +19,8 @@ public class Empleado {
 		this.retrasosTotales = 0;
 		this.retrasosPorProyecto = new HashMap<>();
 	}
+	
+	public boolean estaDisponible() {
+		return disponible;
+	}
 }
