@@ -12,4 +12,9 @@ public class EmpleadoContratado extends Empleado {
 	public double getValorHora() {
 		return valorHora;
 	}
+	
+	@Override
+	public double calcularSueldo() {
+		return valorHora * 160;
+	}
 }
