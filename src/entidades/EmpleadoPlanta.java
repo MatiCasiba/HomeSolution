@@ -18,4 +18,11 @@ public class EmpleadoPlanta extends Empleado {
 		String cate = c.toUpperCase();
 		return cate.equals("INICIAL") || cate.equals("TECNICO") || cate.equals("EXPERTO");
 	}
+	
+	public double getValorDia() {
+		return valorDia;
+	}
+	public String getCategoria() {
+		return categoria;
+	}
 }
