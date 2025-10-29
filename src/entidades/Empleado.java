@@ -53,6 +53,8 @@ public class Empleado {
 		return new HashMap<>(retrasosPorProyecto);
 	}
 	
+	public abstract double calcularSueldo();
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

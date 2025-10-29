@@ -25,4 +25,14 @@ public class EmpleadoPlanta extends Empleado {
 	public String getCategoria() {
 		return categoria;
 	}
+	
+	@Override
+	public double calcularSueldo() {
+		switch(categoria) {
+			case "INICIAL": return valorDia * 20;
+			case "TECNICO": return valorDia * 25;
+			case "EXPERTO": return valorDia * 30;
+			default: return valorDia * 20; // fallback
+		}
+	}
 }
