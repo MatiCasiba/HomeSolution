@@ -65,6 +65,14 @@ public class Empleado {
 	}
 	
 	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) return true;
+		if(!(obj instanceof Empleado)) return false;
+		Empleado other = (Empleado) obj;
+		return legajo == other.legajo;
+	}
+	
+	@Override
 	public int hashCode() {
 		return Objects.hash(legajo);
 	}
