@@ -31,4 +31,11 @@ public class Empleado {
 	public void asignar() {
 		this.disponible = false;
 	}
+	
+	public void registrarRetrasos(int numProyecto, int dias) {
+		if(numProyecto <= 0) throw new IllegalArgumentException("Número de poryecto inválido");
+		if(dias < 0) throw new IllegalArgumentException("Los días de retraso no pueden ser negativos");
+		retrasosTotales += dias;
+		retrasosPorProyecto.merge(numProyecto, dias, Integer::sum);
+	}
 }
