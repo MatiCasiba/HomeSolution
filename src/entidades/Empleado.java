@@ -48,7 +48,7 @@ public class Empleado {
 	public int getRetrasosTotales() {
 		return retrasosTotales;
 	}
-	public Map<Integer, Integer> getRetrasosPorPoryectos(){
+	public Map<Integer, Integer> getRetrasosPorProyecto(){
 		return new HashMap<>(retrasosPorProyecto);
 	}
 }
