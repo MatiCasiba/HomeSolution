@@ -35,4 +35,9 @@ public class EmpleadoPlanta extends Empleado {
 			default: return valorDia * 20; // fallback
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " [Planta - Valor día="+ valorDia + ", Categoría=" + categoria + "]";
+	}
 }
