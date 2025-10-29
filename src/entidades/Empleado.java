@@ -38,4 +38,17 @@ public class Empleado {
 		retrasosTotales += dias;
 		retrasosPorProyecto.merge(numProyecto, dias, Integer::sum);
 	}
+	
+	public int getLegajo() {
+		return legajo;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public int getRetrasosTotales() {
+		return retrasosTotales;
+	}
+	public Map<Integer, Integer> getRetrasosPorPoryectos(){
+		return new HashMap<>(retrasosPorProyecto);
+	}
 }
