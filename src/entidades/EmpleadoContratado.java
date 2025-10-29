@@ -8,4 +8,8 @@ public class EmpleadoContratado extends Empleado {
 		if(valorHora <= 0) throw new IllegalArgumentException("El valor por hora debe ser mayor a 0");
 		this.valorHora = valorHora;
 	}
+	
+	public double getValorHora() {
+		return valorHora;
+	}
 }
