@@ -17,4 +17,8 @@ public class EmpleadoContratado extends Empleado {
 	public double calcularSueldo() {
 		return valorHora * 160;
 	}
+	
+	public String toString() {
+		return super.toString() + "[Contratado - Valor hora=" + valorHora + "]";
+	}
 }
