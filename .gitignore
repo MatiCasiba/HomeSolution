@@ -1,0 +1,29 @@
+.classpath
+.project
+.settings/
+*.log
+*.bak
+*.swp
+target/
+bin/
+ReadMe.txt
+
+*.class
+
+# /.idea/ 
+# /.mvn/
+# /pom.xml.tag
+# /pom.xml.releaseBackup
+# /pom.xml.versionsBackup
+# /pom.xml.next
+# /release.properties
+# /dependency-reduced-pom.xml
+# /buildnumber.properties
+# /.recommenders/
+
+# .gradle/
+# build/
+
+# /test-output/
+# /surefire-reports/
+# /jacoco-reports/
