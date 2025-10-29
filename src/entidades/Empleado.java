@@ -51,4 +51,15 @@ public class Empleado {
 	public Map<Integer, Integer> getRetrasosPorProyecto(){
 		return new HashMap<>(retrasosPorProyecto);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Empleado [Legajo=").append(legajo)
+			.append(", Nombre=").append(nombre)
+			.append(", Disponiblea=").append(disponible)
+			.append(", Retrasps Totales=").append(retrasosTotales)
+			.append("]");
+		return sb.toString();
+	}
 }
