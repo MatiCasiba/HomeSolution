@@ -2,6 +2,7 @@ package entidades;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Empleado {
 	protected int legajo;
@@ -57,9 +58,15 @@ public class Empleado {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Empleado [Legajo=").append(legajo)
 			.append(", Nombre=").append(nombre)
-			.append(", Disponiblea=").append(disponible)
-			.append(", Retrasps Totales=").append(retrasosTotales)
+			.append(", Disponibles=").append(disponible)
+			.append(", Retrasos Totales=").append(retrasosTotales)
 			.append("]");
 		return sb.toString();
 	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(legajo);
+	}
+	
 }
