@@ -44,4 +44,18 @@ public class Tarea {
 	public boolean estaTerminada() {
 		return terminada;
 	}
+	
+	public void asignarEmpleado(Empleado empleado) {
+		if(empleado == null) {
+			throw new IllegalArgumentException("El empleado asigndo no puede ser nulo");
+		}
+		if(!empleado.estaDisponible()) {
+			throw new IllegalArgumentException("El empleado no está disponible para asignar");
+		}
+		if(terminada) {
+			throw new IllegalStateException("No se puede asignar un empleado a una tarea finalizada"); 
+		}
+		this.empleadoAsignado = empleado;
+		empleado.asignar();
+	}
 }
