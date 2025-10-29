@@ -23,4 +23,12 @@ public class Empleado {
 	public boolean estaDisponible() {
 		return disponible;
 	}
+	
+	public void liberar() {
+		this.disponible = true;
+	}
+	
+	public void asignar() {
+		this.disponible = false;
+	}
 }
