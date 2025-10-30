@@ -75,4 +75,12 @@ public class Tarea {
 			empleadoAsignado.registrarRetrasos(0, deasRetraso); // el proyecto se asigna mass adelante en HomeSolution
 		}
 	}
+	
+	public void marcarComoTerminada() {
+		if(terminada) {
+			throw new IllegalStateException("La tarea ya está finalizada");
+		}
+		terminada = true;
+		liberarEmpleado();
+	}
 }
