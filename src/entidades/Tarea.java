@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.Objects;
+
 public class Tarea {
 	private String titulo;
 	private String descripcion;
@@ -111,5 +113,10 @@ public class Tarea {
 		if(!(obj instanceof Tarea)) return false;
 		Tarea other = (Tarea) obj;
 		return titulo.equalsIgnoreCase(other.titulo);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(titulo.toLowerCase());
 	}
 }
