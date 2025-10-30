@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class Empleado {
-	protected int legajo;
-	protected String nombre;
-	protected boolean disponible;
-	protected int retrasosTotales;
-	protected Map<Integer, Integer> retrasosPorProyecto;
+	private int legajo;
+	private String nombre;
+	private boolean disponible;
+	private int retrasosTotales;
+	private Map<Integer, Integer> retrasosPorProyecto;
 	
 	public Empleado(int legajo, String nombre) {
 		if(legajo<=0) throw new IllegalArgumentException("El legajo debe ser mayor que 0");
