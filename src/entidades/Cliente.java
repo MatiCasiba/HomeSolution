@@ -34,4 +34,7 @@ public class Cliente {
 	public String getEmail() {
 		return email;
 	}
+	public String getContacto() {
+		return String.format("Cliente: %s | Tel: %s | Email: %s", nombre, telefono, email);
+	}
 }
