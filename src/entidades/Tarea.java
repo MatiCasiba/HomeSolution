@@ -95,4 +95,13 @@ public class Tarea {
 		}
 		return costoBase * (1+recargo);
 	}
+	
+	public String getClave() {
+		return titulo.toLowerCase().trim();
+	}
+	
+	@Override
+	public String toString() {
+		return titulo;
+	}
 }
