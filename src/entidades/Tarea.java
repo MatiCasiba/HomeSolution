@@ -104,4 +104,12 @@ public class Tarea {
 	public String toString() {
 		return titulo;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) return true;
+		if(!(obj instanceof Tarea)) return false;
+		Tarea other = (Tarea) obj;
+		return titulo.equalsIgnoreCase(other.titulo);
+	}
 }
