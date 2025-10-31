@@ -2,6 +2,7 @@ package entidades;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,5 +42,33 @@ public class Proyecto {
 		this.fechaFinReal = null;
 		this.estado = Estado.pendiente;
 		this.historialEmpleados = new ArrayList<>();
+	}
+	
+	public int getNumeroProyecto() {
+		return numeroProyecto;
+	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public String getDireccion() {
+		return direccion;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public LocalDate getFechaInicio() {
+		return fechaInicio;
+	}
+	public LocalDate getFechaFinEstimado() {
+		return fechaFinEstimado;
+	}
+	public LocalDate getFechaFinReal() {
+		return fechaFinReal;
+	}
+	public Map<String, Tarea> getTareas(){
+		return Collections.unmodifiableMap(tareas);
+	}
+	public List<Empleado> obtenerHistorialEmpleados(){
+		return Collections.unmodifiableList(historialEmpleados);
 	}
 }
