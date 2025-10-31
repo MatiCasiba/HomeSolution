@@ -111,6 +111,17 @@ public class Proyecto {
 		this.fechaFinReal = LocalDate.now();
 	}
 	
+	public void marcarComoEnCurso() {
+		if(!estado.equals(Estado.pendiente)) {
+			throw new IllegalStateException("Solo se puede pasar a ACTIVO desde PENDIENTE");
+		}
+		boolean tieneAsignadas = tareas.values().stream().anyMatch(t -> t.getEmpleadoAsignado() != null);
+		if(tieneAsignadas) {
+			throw new IllegalStateException("No se puede iniciar un proyecto con tareas ya asignadas");
+		}
+		estado = Estado.activo;
+	}
+	
 	private int calcularDiasEstimados() {
 		int total = 0;
 		for(Tarea t : tareas.values()) {
