@@ -39,6 +39,7 @@ public class Proyecto {
 		this.direccion = direccion;
 		this.tareas = new HashMap<>(tareas);
 		this.fechaInicio = fechaInicio;
+		this.fechaFinEstimado = fechaInicio.plusDays(calcularDiasEstimados());
 		this.fechaFinReal = null;
 		this.estado = Estado.pendiente;
 		this.historialEmpleados = new ArrayList<>();
@@ -80,5 +81,14 @@ public class Proyecto {
 			throw new IllegalArgumentException("Ya existe una tarea con ese título en el proyecto");
 		}
 		tareas.put(tarea.getClave(), tarea);
+		fechaFinEstimado = fechaInicio.plusDays(calcularDiasEstimados());
+	}
+	
+	private int calcularDiasEstimados() {
+		int total = 0;
+		for(Tarea t : tareas.values()) {
+			total += t.getDiasNecesarios();
+		}
+		return total;
 	}
 }
