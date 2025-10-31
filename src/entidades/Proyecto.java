@@ -122,6 +122,18 @@ public class Proyecto {
 		estado = Estado.activo;
 	}
 	
+	public void marcarComoFinalizado() {
+		if(estado.equals(Estado.finalizado)) {
+			throw new IllegalStateException("El proyecto ya está finalizado");
+		}
+		boolean hayIncompletas = tareas.values().stream().anyMatch(t -> t.estaTerminada());
+		if(hayIncompletas) {
+			throw new IllegalStateException("No se pude finalizar el proyecto: hay tareas sin terminar");
+		}
+		actualizarFechaFinReal();
+		estado = Estado.finalizado;
+	}
+	
 	private int calcularDiasEstimados() {
 		int total = 0;
 		for(Tarea t : tareas.values()) {
