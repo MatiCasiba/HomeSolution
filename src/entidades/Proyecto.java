@@ -71,4 +71,14 @@ public class Proyecto {
 	public List<Empleado> obtenerHistorialEmpleados(){
 		return Collections.unmodifiableList(historialEmpleados);
 	}
+	
+	public void agregarTarea(Tarea tarea) {
+		if(tarea == null) {
+			throw new IllegalArgumentException("La tarea no puede ser nula");
+		}
+		if(tareas.containsKey(tarea.getClave())) {
+			throw new IllegalArgumentException("Ya existe una tarea con ese título en el proyecto");
+		}
+		tareas.put(tarea.getClave(), tarea);
+	}
 }
