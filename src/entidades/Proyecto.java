@@ -84,6 +84,15 @@ public class Proyecto {
 		fechaFinEstimado = fechaInicio.plusDays(calcularDiasEstimados());
 	}
 	
+	private boolean tieneRetrasosGraves() {
+		for(Tarea t : tareas.values()) {
+			if(t.getDiasRetraso() > 5) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private int calcularDiasEstimados() {
 		int total = 0;
 		for(Tarea t : tareas.values()) {
