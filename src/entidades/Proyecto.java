@@ -134,6 +134,25 @@ public class Proyecto {
 		estado = Estado.finalizado;
 	}
 	
+	public void marcarTareaTerminada(String tituloTarea) {
+		if(tituloTarea == null || tituloTarea.isBlank()) {
+			throw new IllegalArgumentException("El título de la tarea no puede ser vacío");
+		}
+		
+		Tarea tarea = tareas.get(tituloTarea);
+		if(tarea == null) {
+			throw new IllegalArgumentException("No existe una tarea con el título: " + tituloTarea);
+		}
+		
+		if(!tarea.estaTerminada()) {
+			tarea.marcarComoTerminada();
+			Empleado emp = tarea.getEmpleadoAsignado();
+			if(emp != null && !historialEmpleados.contains(emp)) {
+				historialEmpleados.add(emp);
+			}
+		}
+	}
+	
 	private int calcularDiasEstimados() {
 		int total = 0;
 		for(Tarea t : tareas.values()) {
