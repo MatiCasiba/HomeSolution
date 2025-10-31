@@ -107,6 +107,10 @@ public class Proyecto {
 		return false;
 	}
 	
+	public void actualizarFechaFinReal() {
+		this.fechaFinReal = LocalDate.now();
+	}
+	
 	private int calcularDiasEstimados() {
 		int total = 0;
 		for(Tarea t : tareas.values()) {
