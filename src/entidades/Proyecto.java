@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Proyecto {
 	private int numeroProyecto;
@@ -159,5 +160,18 @@ public class Proyecto {
 			total += t.getDiasNecesarios();
 		}
 		return total;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) return true;
+		if(!(obj instanceof Proyecto)) return false;
+		Proyecto other = (Proyecto) obj;
+		return this.numeroProyecto == other.numeroProyecto;
+	}
+	
+	@Override 
+	public int hashCode() {
+		return Objects.hash(numeroProyecto);
 	}
 }
