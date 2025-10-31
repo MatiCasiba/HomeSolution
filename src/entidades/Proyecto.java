@@ -84,6 +84,20 @@ public class Proyecto {
 		fechaFinEstimado = fechaInicio.plusDays(calcularDiasEstimados());
 	}
 	
+	public double calcularCostoTaeas() {
+		double total = 0;
+		boolean hayRetraso = false;
+		for(Tarea t: tareas.values()) {
+			total += t.calcularCosto();
+			if(t.getDiasNecesarios() > 0) hayRetraso = true;
+		}
+		if(hayRetraso) {
+			double recargo = (tieneRetrasosGraves() ? 0.35 : 0.25);
+			total *= (1 + recargo);
+		}
+		return total;
+	}
+	
 	private boolean tieneRetrasosGraves() {
 		for(Tarea t : tareas.values()) {
 			if(t.getDiasRetraso() > 5) {
