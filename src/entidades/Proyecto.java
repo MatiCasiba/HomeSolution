@@ -163,6 +163,20 @@ public class Proyecto {
 	}
 	
 	@Override
+	public String toString() {
+		return String.format(
+				"Proyecto #%d [%s]\nCliente: %s\nDirección: %s\bEstado: %s\nInicio: %s\nFin estimado: %s\n",
+				numeroProyecto,
+				cliente.getNombre(),
+				cliente.getContacto(),
+				direccion,
+				estado,
+				fechaInicio,
+				(fechaFinEstimado != null ? fechaFinEstimado : "-")
+		);
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) return true;
 		if(!(obj instanceof Proyecto)) return false;
