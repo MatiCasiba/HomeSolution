@@ -182,4 +182,22 @@ public class HomeSolution {
 		menorRetraso.get().asignar();
 	}
 	
+	private boolean irepValido() {
+		boolean empleadosExisten = proyectos.values().stream()
+                .flatMap(p -> p.getTareas().values().stream())
+                .map(Tarea::getEmpleadoAsignado)
+                .filter(Objects::nonNull)
+                .allMatch(empleados::containsValue);
+		
+		boolean pendientesOk = proyectos.values().stream()
+				.filter(p -> p.getEstado().equals(Estado.pendiente))
+				.flatMap(p -> p.getTareas().values().stream())
+				.allMatch(t -> t.getEmpleadoAsignado() == null);
+		
+		boolean finalizadosOk = proyectos.values().stream()
+				.filter( p -> p.getEstado().equals(Estado.finalizado))
+				.allMatch(p -> p.getTareas().values().stream().allMatch(Tarea::estaTerminada));
+		
+		return empleadosExisten && pendientesOk && finalizadosOk; 
+	}
 }
