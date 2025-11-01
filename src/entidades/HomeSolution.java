@@ -1,8 +1,10 @@
 package entidades;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class HomeSolution {
 	private Map<Integer, Proyecto> proyectos;
@@ -115,4 +117,13 @@ public class HomeSolution {
 		}
 		return p.calcularCostoTaeas();
 	}
+	
+	public List<Proyecto> obtenerProyectosNoFinalizados(){
+		return proyectos.values().stream().filter(p -> !p.getEstado().equals(Estado.finalizado)).collect(Collectors.toList());
+	}
+	
+	public List<Proyecto> obtnerProyectosPendientes(){
+		return proyectos.values().stream().filter(p -> p.getEstado().equals(Estado.pendiente)).collect(Collectors.toList());
+	}
+	
 }
