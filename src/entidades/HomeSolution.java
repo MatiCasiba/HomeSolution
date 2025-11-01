@@ -1,5 +1,6 @@
 package entidades;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +49,32 @@ public class HomeSolution implements IHomeSolution{
 
 	private int generarLegajo() {
 		return empleados.keySet().stream().max(Integer::compareTo).orElse(0) + 1;
+	}
+	
+	// REGISTRO Y GESTION DE PROYECTOS
+	@Override
+	public void registrarProyecto(String[] titulos, String[] descripcion, double[] dias, String domicilio,
+			String[] cliente, String inicio, String fin) {
+		validarDatosProyecto(titulos, descripcion, dias, domicilio, cliente, inicio, fin);
+
+		// creo cliente
+		Cliente clienteObj = new Cliente(cliente[0], cliente[2], cliente[1]);
+
+		// creo tareas
+		Map<String, Tarea> tareasMap = new HashMap<>();
+		for (int i = 0; i < titulos.length; i++) {
+			Tarea tarea = new Tarea(titulos[i], descripcion[i], (int) dias[i]);
+			tareasMap.put(tarea.getClave(), tarea);
+		}
+
+		// parseo fechas
+		LocalDate fechaInicio = parsearFecha(inicio);
+		LocalDate fechaFin = parsearFecha(fin);
+
+		// creao proyecto
+		Proyecto proyecto = new Proyecto(contadorProyectos, clienteObj, domicilio, fechaInicio, tareasMap);
+		proyectos.put(contadorProyectos, proyecto);
+		contadorProyectos++;
 	}
 	
 }
