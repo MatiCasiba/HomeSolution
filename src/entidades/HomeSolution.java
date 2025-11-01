@@ -75,8 +75,36 @@ public class HomeSolution {
 	public void finalzarProyecto(int numProyecto) {
 		Proyecto p = proyectos.get(numProyecto);
 		if(p == null) {
-			throw new IllegalArgumentException("Poryecto no encontrado"); 
+			throw new IllegalArgumentException("Proyecto no encontrado"); 
 		}
 		p.marcarComoFinalizado();
+	}
+	
+	public void reasignarEmpleado(int numProyecto, String tituloTarea, int nuevoLegajo) {
+		Proyecto p = proyectos.get(numProyecto);
+		if(p == null) {
+			throw new IllegalArgumentException("Proyecto inexistente");
+		}
+		if(p.getEstado().equals(Estado.finalizado)) {
+			throw new IllegalStateException("Proyecto ya finalizado");
+		}
+		
+		Empleado nuevo = empleados.get(nuevoLegajo);
+		if(nuevo == null) {
+			throw new IllegalArgumentException("Empleado no encontrado");
+		}
+		if(!nuevo.estaDisponible()) {
+			throw new IllegalStateException("El empleado no está disponible");
+		}
+		
+		Tarea t = p.getTareas().get(tituloTarea);
+		if(t == null) {
+			throw new IllegalArgumentException("Tarea inexistente");
+		}
+		if(t.getEmpleadoAsignado() != null) {
+			t.getEmpleadoAsignado().liberar();
+		}
+		t.asignarEmpleado(nuevo);
+		nuevo.asignar();
 	}
 }
