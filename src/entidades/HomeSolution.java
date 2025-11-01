@@ -370,5 +370,11 @@ public class HomeSolution implements IHomeSolution{
         }
         return tarea;
     }
+    
+	private void validarTareaNoAsignada(Tarea tarea) {
+		if (tarea.getEmpleadoAsignado() != null) {
+			throw new IllegalArgumentException("La tarea ya tiene un empleado asignado");
+		}
+	}
 
 }
