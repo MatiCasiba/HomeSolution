@@ -193,4 +193,25 @@ public class HomeSolution implements IHomeSolution{
 		}
 		proyecto.marcarComoFinalizado();
 	}
+	
+	// REASIGNACIÓN DE EMPLEADOS
+	@Override
+	public void reasignarEmpleadoEnProyecto(Integer numero, Integer legajo, String titulo) {
+		Proyecto proyecto = obtenerProyectoValido(numero);
+		validarProyectoNoFinalizado(proyecto);
+
+		Tarea tarea = obtenerTarea(proyecto, titulo);
+
+		if (tarea.getEmpleadoAsignado() == null) {
+			throw new IllegalStateException("La tarea no tiene empleado asignado previamente");
+		}
+
+		Empleado nuevoEmpleado = obtenerEmpleado(legajo);
+		if (nuevoEmpleado == null || !nuevoEmpleado.estaDisponible()) {
+			throw new IllegalStateException("El empleado no existe o no está disponible");
+		}
+
+		tarea.liberarEmpleado();
+		tarea.asignarEmpleado(nuevoEmpleado);
+	}
 }
