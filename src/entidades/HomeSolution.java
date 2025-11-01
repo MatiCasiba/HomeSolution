@@ -107,4 +107,12 @@ public class HomeSolution {
 		t.asignarEmpleado(nuevo);
 		nuevo.asignar();
 	}
+	
+	public double calcularCostoFinal(int numProyecto) {
+		Proyecto p = proyectos.get(numProyecto);
+		if(p==null) {
+			throw new IllegalArgumentException("Poryecto inexistente");
+		}
+		return p.calcularCostoTaeas();
+	}
 }
