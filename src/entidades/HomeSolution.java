@@ -138,4 +138,23 @@ public class HomeSolution implements IHomeSolution{
 		proyecto.marcarComoEnCurso();
 	}
 	
+	@Override
+	public void registrarRetrasoEnTarea(Integer numero, String titulo, double cantidadDias) {
+		Proyecto proyecto = obtenerProyectoValido(numero);
+		validarProyectoNoFinalizado(proyecto);
+
+		Tarea tarea = obtenerTarea(proyecto, titulo);
+
+		if (cantidadDias < 0) {
+			throw new IllegalArgumentException("Los días de retraso no pueden ser negativos");
+		}
+
+		tarea.setDiasRetraso((int) cantidadDias);
+
+		//registra retraso en el empleado si está asignado
+		if (tarea.getEmpleadoAsignado() != null) {
+			tarea.getEmpleadoAsignado().registrarRetrasos(numero, (int) cantidadDias);
+		}
+	}
+	
 }
