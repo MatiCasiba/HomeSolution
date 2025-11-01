@@ -71,4 +71,12 @@ public class HomeSolution {
 		}
 		t.setDiasRetraso(diasRetraso);
 	}
+	
+	public void finalzarProyecto(int numProyecto) {
+		Proyecto p = proyectos.get(numProyecto);
+		if(p == null) {
+			throw new IllegalArgumentException("Poryecto no encontrado"); 
+		}
+		p.marcarComoFinalizado();
+	}
 }
