@@ -249,4 +249,12 @@ public class HomeSolution implements IHomeSolution{
                 .filter(p -> p.getEstado().equals(Estado.finalizado))
                 .map(p -> new Tupla<>(p.getNumeroProyecto(), p.getDireccion())).collect(Collectors.toList());
     }
+	
+	@Override
+    public List<Tupla<Integer, String>> proyectosPendientes() {
+        return proyectos.values().stream()
+                .filter(p -> p.getEstado().equals(Estado.pendiente))
+                .map(p -> new Tupla<>(p.getNumeroProyecto(), p.getDireccion()))
+                .collect(Collectors.toList());
+    }
 }
