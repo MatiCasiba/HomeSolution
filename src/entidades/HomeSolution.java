@@ -1,5 +1,6 @@
 package entidades;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -157,6 +158,28 @@ public class HomeSolution {
 			throw new IllegalArgumentException("Poryecto no encontrado");
 		}
 		return p.getTareas().values().stream().map(Tarea::getEmpleadoAsignado).filter(Objects::nonNull).distinct().collect(Collectors.toList());
+	}
+	
+	public void reasignarEmpleadoMenosRetrasos(int numProyecto, String tituloTarea) {
+		Proyecto p = proyectos.get(numProyecto);
+		if(p==null) {
+			throw new IllegalArgumentException("Proyecto inexistente");
+		}
+		Optional<Empleado> menorRetraso = empleados.values().stream().filter(Empleado::estaDisponible).min(Comparator.comparingInt(Empleado::getRetrasosTotales));
+		if(menorRetraso.isEmpty()) {
+			throw new IllegalStateException("No hay emplados disponibles");
+		}
+		
+		Tarea t = p.getTareas().get(tituloTarea);
+		if(t==null) {
+			throw new IllegalArgumentException("Tarea no encontrada");
+		}
+		
+		if(t.getEmpleadoAsignado() != null) {
+			t.getEmpleadoAsignado().liberar();
+		}
+		t.asignarEmpleado(menorRetraso.get());
+		menorRetraso.get().asignar();
 	}
 	
 }
