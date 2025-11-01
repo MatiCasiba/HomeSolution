@@ -316,4 +316,15 @@ public class HomeSolution implements IHomeSolution{
 		Proyecto proyecto = proyectos.get(numero);
 		return proyecto != null ? proyecto.getDireccion() : null;
 	}
+	
+	@Override
+	public boolean tieneRestrasos(String legajo) {
+		try {
+			Integer legajoInt = Integer.parseInt(legajo);
+			Empleado empleado = empleados.get(legajoInt);
+			return empleado != null && empleado.getRetrasosTotales() > 0;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
 }
