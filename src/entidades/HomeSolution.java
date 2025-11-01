@@ -214,4 +214,24 @@ public class HomeSolution implements IHomeSolution{
 		tarea.liberarEmpleado();
 		tarea.asignarEmpleado(nuevoEmpleado);
 	}
+	
+	@Override
+	public void reasignarEmpleadoConMenosRetraso(Integer numero, String titulo) {
+		Proyecto proyecto = obtenerProyectoValido(numero);
+		validarProyectoNoFinalizado(proyecto);
+
+		Tarea tarea = obtenerTarea(proyecto, titulo);
+
+		if (tarea.getEmpleadoAsignado() == null) {
+			throw new IllegalStateException("La tarea no tiene empleado asignado previamente");
+		}
+
+		Empleado nuevoEmpleado = buscarEmpleadoMenosRetrasos();
+		if (nuevoEmpleado == null) {
+			throw new IllegalStateException("No hay empleados disponibles");
+		}
+
+		tarea.liberarEmpleado();
+		tarea.asignarEmpleado(nuevoEmpleado);
+	}
 }
