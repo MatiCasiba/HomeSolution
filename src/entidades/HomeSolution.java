@@ -378,6 +378,10 @@ public class HomeSolution implements IHomeSolution{
 		}
 	}
 	
+	private Empleado obtenerEmpleado(Integer legajo) {
+		return empleados.get(legajo);
+	}
+	
 	private Empleado buscarEmpleadoDisponible() {
 		return empleados.values().stream().filter(Empleado::estaDisponible).findFirst().orElse(null);
 	}
