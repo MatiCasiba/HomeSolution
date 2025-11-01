@@ -126,4 +126,8 @@ public class HomeSolution {
 		return proyectos.values().stream().filter(p -> p.getEstado().equals(Estado.pendiente)).collect(Collectors.toList());
 	}
 	
+	public List<Proyecto> obtnerProyectosActivos(){
+		return proyectos.values().stream().filter(p -> p.getEstado().equals(Estado.activo)).collect(Collectors.toList());
+	}
+	
 }
