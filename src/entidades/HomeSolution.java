@@ -25,4 +25,11 @@ public class HomeSolution {
 	public void registrarEmpleadoContratado(EmpleadoContratado e) {
 		registrarEmpleado(e);
 	}
+	
+	public void registrarProyecto(Proyecto p) {
+		if(p == null || proyectos.containsKey(p.getNumeroProyecto())) {
+			throw new IllegalArgumentException("Proyecto nulo o número duplicado");
+		}
+		proyectos.put(p.getNumeroProyecto(), p);
+	}
 }
