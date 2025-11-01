@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -380,5 +381,9 @@ public class HomeSolution implements IHomeSolution{
 	private Empleado buscarEmpleadoDisponible() {
 		return empleados.values().stream().filter(Empleado::estaDisponible).findFirst().orElse(null);
 	}
-
+	
+	private Empleado buscarEmpleadoMenosRetrasos() {
+		return empleados.values().stream().filter(Empleado::estaDisponible)
+				.min(Comparator.comparingInt(Empleado::getRetrasosTotales)).orElse(null);
+	}
 }
