@@ -11,4 +11,11 @@ public class HomeSolution {
 		this.proyectos = new HashMap<>();
 		this.empleados = new HashMap<>();
 	}
+	
+	public void registrarEmpleado(Empleado e) {
+		if(e == null || empleados.containsKey(e.getLegajo())) {
+			throw new IllegalArgumentException("Empleado nulo o legajo duplicado");
+		}
+		empleados.put(e.getLegajo(), e);
+	}
 }
