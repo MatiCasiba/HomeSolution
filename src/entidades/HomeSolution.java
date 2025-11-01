@@ -376,5 +376,9 @@ public class HomeSolution implements IHomeSolution{
 			throw new IllegalArgumentException("La tarea ya tiene un empleado asignado");
 		}
 	}
+	
+	private Empleado buscarEmpleadoDisponible() {
+		return empleados.values().stream().filter(Empleado::estaDisponible).findFirst().orElse(null);
+	}
 
 }
