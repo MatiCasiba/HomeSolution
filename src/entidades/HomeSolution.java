@@ -3,6 +3,7 @@ package entidades;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -148,6 +149,14 @@ public class HomeSolution {
 			throw new IllegalArgumentException("Empleado no encontrado");
 		}
 		return e.getRetrasosTotales() > 0;
+	}
+	
+	public List<Empleado> consultarEmpleadosAsignadosAProyecto(int numProyecto){
+		Proyecto p = proyectos.get(numProyecto);
+		if(p == null) {
+			throw new IllegalArgumentException("Poryecto no encontrado");
+		}
+		return p.getTareas().values().stream().map(Tarea::getEmpleadoAsignado).filter(Objects::nonNull).distinct().collect(Collectors.toList());
 	}
 	
 }
