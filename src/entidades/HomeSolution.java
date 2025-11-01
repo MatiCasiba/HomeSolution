@@ -55,4 +55,20 @@ public class HomeSolution {
 		t.asignarEmpleado(disponible.get());
 		disponible.get().asignar();
 	}
+	
+	public void registrarRetrasoEnTarea(int numProyecto, String tituloTarea, int diasRetraso) {
+		Proyecto p = proyectos.get(numProyecto);
+		if(p == null) {
+			throw new IllegalArgumentException("Poryecto no encontrado");
+		}
+		if(p.getEstado().equals(Estado.finalizado)) {
+			throw new IllegalStateException("Proyecto ya finalizado");
+		}
+		
+		Tarea t = p.getTareas().get(tituloTarea);
+		if(t == null) {
+			throw new IllegalArgumentException("Tarea inexistente");
+		}
+		t.setDiasRetraso(diasRetraso);
+	}
 }
