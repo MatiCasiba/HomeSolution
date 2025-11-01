@@ -234,4 +234,10 @@ public class HomeSolution implements IHomeSolution{
 		tarea.liberarEmpleado();
 		tarea.asignarEmpleado(nuevoEmpleado);
 	}
+	
+	// CONSULTAS
+	@Override
+	public double costoProyecto() {
+        return proyectos.values().stream().mapToDouble(Proyecto::calcularCostoTaeas).sum();
+    }
 }
