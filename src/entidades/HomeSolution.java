@@ -138,4 +138,8 @@ public class HomeSolution {
 		return p.getEstado().equals(Estado.finalizado);
 	}
 	
+	public List<Empleado> obtenerEmpleadosNoAsignados(){
+		return empleados.values().stream().filter(Empleado::estaDisponible).collect(Collectors.toList());
+	}
+	
 }
