@@ -292,4 +292,22 @@ public class HomeSolution implements IHomeSolution{
 				.map(e -> new Tupla<>(e.getLegajo(), e.getNombre())).collect(Collectors.toList());
 	}
 	
+	// REQUERIMIENTOS NUEVOS
+	@Override
+	public Object[] tareasProyectoNoAsignadas(Integer numero) {
+		Proyecto proyecto = proyectos.get(numero);
+		if (proyecto == null) {
+			return new Object[0];
+		}
+		return proyecto.getTareas().values().stream().filter(t -> t.getEmpleadoAsignado() == null).toArray();
+	}
+
+	@Override
+	public Object[] tareasDeUnProyecto(Integer numero) {
+		Proyecto proyecto = proyectos.get(numero);
+		if (proyecto == null) {
+			return new Object[0];
+		}
+		return proyecto.getTareas().values().toArray();
+	}
 }
