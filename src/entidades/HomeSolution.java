@@ -130,4 +130,12 @@ public class HomeSolution {
 		return proyectos.values().stream().filter(p -> p.getEstado().equals(Estado.activo)).collect(Collectors.toList());
 	}
 	
+	public boolean consultarFinalizado(int numProyecto) {
+		Proyecto p = proyectos.get(numProyecto);
+		if(p == null) {
+			throw new IllegalArgumentException("Poryecto no encontrado");
+		}
+		return p.getEstado().equals(Estado.finalizado);
+	}
+	
 }
