@@ -77,4 +77,21 @@ public class HomeSolution implements IHomeSolution{
 		contadorProyectos++;
 	}
 	
+	private void validarDatosProyecto(String[] titulos, String[] descripcion, double[] dias, String domicilio,
+			String[] cliente, String inicio, String fin) {
+		if (titulos == null || descripcion == null || dias == null || titulos.length == 0
+				|| titulos.length != descripcion.length || titulos.length != dias.length) {
+			throw new IllegalArgumentException("Los arrays de tareas deben tener la misma longitud y no ser vacíos");
+		}
+		if (domicilio == null || domicilio.isBlank()) {
+			throw new IllegalArgumentException("El domicilio no puede estar vacío");
+		}
+		if (cliente == null || cliente.length < 3) {
+			throw new IllegalArgumentException("El cliente debe tener nombre, email y teléfono");
+		}
+		if (inicio == null || fin == null) {
+			throw new IllegalArgumentException("Las fechas no pueden ser nulas");
+		}
+	}
+	
 }
