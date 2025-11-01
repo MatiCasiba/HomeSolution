@@ -310,4 +310,10 @@ public class HomeSolution implements IHomeSolution{
 		}
 		return proyecto.getTareas().values().toArray();
 	}
+	
+	@Override
+	public String consultarDomicilioProyecto(Integer numero) {
+		Proyecto proyecto = proyectos.get(numero);
+		return proyecto != null ? proyecto.getDireccion() : null;
+	}
 }
