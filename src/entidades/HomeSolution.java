@@ -18,4 +18,11 @@ public class HomeSolution {
 		}
 		empleados.put(e.getLegajo(), e);
 	}
+	
+	public void registrarEmpleadoPlanta(EmpleadoPlanta e) {
+		registrarEmpleado(e);
+	}
+	public void registrarEmpleadoContratado(EmpleadoContratado e) {
+		registrarEmpleado(e);
+	}
 }
