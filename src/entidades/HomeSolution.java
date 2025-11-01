@@ -334,4 +334,11 @@ public class HomeSolution implements IHomeSolution{
                 .map(e -> new Tupla<>(e.getLegajo(), e.getNombre()))
                 .collect(Collectors.toList());
     }
+	
+	@Override
+    public String consultarProyecto(Integer numero) {
+        Proyecto proyecto = proyectos.get(numero);
+        return proyecto != null ? proyecto.toString() : "Proyecto no encontrado";
+    }
+
 }
