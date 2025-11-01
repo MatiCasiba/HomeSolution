@@ -169,4 +169,15 @@ public class HomeSolution implements IHomeSolution{
 		proyecto.agregarTarea(nuevaTarea);
 	}
 	
+	@Override
+	public void finalizarTarea(Integer numero, String titulo) {
+		Proyecto proyecto = obtenerProyectoValido(numero);
+		validarProyectoNoFinalizado(proyecto);
+		Tarea tarea = obtenerTarea(proyecto, titulo);
+		if (tarea.estaTerminada()) {
+			throw new IllegalStateException("La tarea ya está finalizada");
+		}
+		proyecto.marcarTareaTerminada(titulo);
+	}
+
 }
