@@ -1,6 +1,8 @@
 package entidades;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,6 +93,14 @@ public class HomeSolution implements IHomeSolution{
 		}
 		if (inicio == null || fin == null) {
 			throw new IllegalArgumentException("Las fechas no pueden ser nulas");
+		}
+	}
+	
+	private LocalDate parsearFecha(String fecha) {
+		try {
+			return LocalDate.parse(fecha, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		} catch (DateTimeParseException e) {
+			throw new IllegalArgumentException("Formato de fecha inválido. Use YYYY-MM-DD");
 		}
 	}
 	
