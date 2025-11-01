@@ -3,6 +3,7 @@ package entidades;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -279,6 +280,16 @@ public class HomeSolution implements IHomeSolution{
 	public int consultarCantidadRetrasosEmpleado(Integer legajo) {
 		Empleado empleado = empleados.get(legajo);
 		return empleado != null ? empleado.getRetrasosTotales() : 0;
+	}
+	
+	@Override
+	public List<Tupla<Integer, String>> empleadosAsignadosAProyecto(Integer numero) {
+		Proyecto proyecto = proyectos.get(numero);
+		if (proyecto == null) {
+			return Collections.emptyList();
+		}
+		return proyecto.obtenerHistorialEmpleados().stream().distinct()
+				.map(e -> new Tupla<>(e.getLegajo(), e.getNombre())).collect(Collectors.toList());
 	}
 	
 }
