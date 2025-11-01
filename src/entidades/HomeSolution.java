@@ -353,5 +353,11 @@ public class HomeSolution implements IHomeSolution{
 		}
 		return proyecto;
 	}
+	
+	private void validarProyectoNoFinalizado(Proyecto proyecto) {
+		if (proyecto.getEstado().equals(Estado.finalizado)) {
+			throw new IllegalArgumentException("El proyecto está finalizado");
+		}
+	}
 
 }
