@@ -121,4 +121,21 @@ public class HomeSolution implements IHomeSolution{
 		proyecto.marcarComoEnCurso();
 	}
 	
+	@Override
+	public void asignarResponsableMenosRetraso(Integer numero, String titulo) {
+		Proyecto proyecto = obtenerProyectoValido(numero);
+		validarProyectoNoFinalizado(proyecto);
+
+		Tarea tarea = obtenerTarea(proyecto, titulo);
+		validarTareaNoAsignada(tarea);
+
+		Empleado empleado = buscarEmpleadoMenosRetrasos();
+		if (empleado == null) {
+			throw new IllegalStateException("No hay empleados disponibles para asignar");
+		}
+
+		tarea.asignarEmpleado(empleado);
+		proyecto.marcarComoEnCurso();
+	}
+	
 }
