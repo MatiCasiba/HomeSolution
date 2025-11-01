@@ -2,6 +2,7 @@ package entidades;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class HomeSolution {
 	private Map<Integer, Proyecto> proyectos;
@@ -31,5 +32,27 @@ public class HomeSolution {
 			throw new IllegalArgumentException("Proyecto nulo o número duplicado");
 		}
 		proyectos.put(p.getNumeroProyecto(), p);
+	}
+	
+	public void asignarEmpleadoATarea(int numProyecto, String tituloTarea) {
+		Proyecto p = proyectos.get(numProyecto);
+		if(p == null) {
+			throw new IllegalArgumentException("Proyecto inexistente");
+		}
+		if(p.getEstado().equals(Estado.finalizado)) {
+			throw new IllegalStateException("No se puede asignar empleados a proyectos finalizados");
+		}
+		
+		Tarea t = p.getTareas().get(tituloTarea);
+		if(t == null) {
+			throw new IllegalArgumentException("Tarea no encontrada");
+		}
+		
+		Optional<Empleado> disponible = empleados.values().stream().filter(Empleado::estaDisponible).findFirst();
+		if(disponible.isEmpty()) {
+			throw new IllegalStateException("No hay empleados disponibles");
+		}
+		t.asignarEmpleado(disponible.get());
+		disponible.get().asignar();
 	}
 }
