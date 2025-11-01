@@ -157,4 +157,16 @@ public class HomeSolution implements IHomeSolution{
 		}
 	}
 	
+	@Override
+	public void agregarTareaEnProyecto(Integer numero, String titulo, String descripcion, double dias) {
+		Proyecto proyecto = obtenerProyectoValido(numero);
+		validarProyectoNoFinalizado(proyecto);
+		if (dias <= 0) {
+			throw new IllegalArgumentException("Los días deben ser mayores a 0");
+		}
+
+		Tarea nuevaTarea = new Tarea(titulo, descripcion, (int) dias);
+		proyecto.agregarTarea(nuevaTarea);
+	}
+	
 }
