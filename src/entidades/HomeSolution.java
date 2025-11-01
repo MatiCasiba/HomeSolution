@@ -263,4 +263,9 @@ public class HomeSolution implements IHomeSolution{
 		return proyectos.values().stream().filter(p -> p.getEstado().equals(Estado.activo))
 				.map(p -> new Tupla<>(p.getNumeroProyecto(), p.getDireccion())).collect(Collectors.toList());
 	}
+	
+	@Override
+	public Object[] empleadosNoAsignados() {
+		return empleados.values().stream().filter(Empleado::estaDisponible).toArray();
+	}
 }
