@@ -327,4 +327,11 @@ public class HomeSolution implements IHomeSolution{
 			return false;
 		}
 	}
+	
+	@Override
+    public List<Tupla<Integer, String>> empleados() {
+        return empleados.values().stream()
+                .map(e -> new Tupla<>(e.getLegajo(), e.getNombre()))
+                .collect(Collectors.toList());
+    }
 }
