@@ -275,5 +275,10 @@ public class HomeSolution implements IHomeSolution{
         return proyecto != null && proyecto.getEstado().equals(Estado.finalizado);
     }
 	
+	@Override
+	public int consultarCantidadRetrasosEmpleado(Integer legajo) {
+		Empleado empleado = empleados.get(legajo);
+		return empleado != null ? empleado.getRetrasosTotales() : 0;
+	}
 	
 }
