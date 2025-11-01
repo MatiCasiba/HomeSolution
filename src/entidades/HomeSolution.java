@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class HomeSolution implements IHomeSolution{
 	private Map<Integer, Proyecto> proyectos;
@@ -239,5 +241,12 @@ public class HomeSolution implements IHomeSolution{
 	@Override
 	public double costoProyecto() {
         return proyectos.values().stream().mapToDouble(Proyecto::calcularCostoTaeas).sum();
+    }
+	
+	@Override
+    public List<Tupla<Integer, String>> proyectosFinalizados() {
+        return proyectos.values().stream()
+                .filter(p -> p.getEstado().equals(Estado.finalizado))
+                .map(p -> new Tupla<>(p.getNumeroProyecto(), p.getDireccion())).collect(Collectors.toList());
     }
 }
