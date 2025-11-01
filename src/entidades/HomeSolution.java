@@ -360,4 +360,15 @@ public class HomeSolution implements IHomeSolution{
 		}
 	}
 
+    private Tarea obtenerTarea(Proyecto proyecto, String titulo) {
+        if (titulo == null || titulo.isBlank()) {
+            throw new IllegalArgumentException("El título de la tarea no puede estar vacío");
+        }
+        Tarea tarea = proyecto.getTareas().get(titulo.toLowerCase().trim());
+        if (tarea == null) {
+            throw new IllegalArgumentException("Tarea no encontrada: " + titulo);
+        }
+        return tarea;
+    }
+
 }
