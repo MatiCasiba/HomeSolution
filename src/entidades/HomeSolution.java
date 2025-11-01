@@ -340,5 +340,18 @@ public class HomeSolution implements IHomeSolution{
         Proyecto proyecto = proyectos.get(numero);
         return proyecto != null ? proyecto.toString() : "Proyecto no encontrado";
     }
+	
+	// METODOS AUXILIARES
+	
+	private Proyecto obtenerProyectoValido(Integer numero) {
+		if (numero == null || numero <= 0) {
+			throw new IllegalArgumentException("Número de proyecto inválido");
+		}
+		Proyecto proyecto = proyectos.get(numero);
+		if (proyecto == null) {
+			throw new IllegalArgumentException("Proyecto no encontrado");
+		}
+		return proyecto;
+	}
 
 }
