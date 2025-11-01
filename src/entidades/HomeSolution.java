@@ -179,5 +179,18 @@ public class HomeSolution implements IHomeSolution{
 		}
 		proyecto.marcarTareaTerminada(titulo);
 	}
+	
+	@Override
+	public void finalizarProyecto(Integer numero, String fin) {
+		Proyecto proyecto = obtenerProyectoValido(numero);
+		if (proyecto.getEstado().equals(Estado.finalizado)) {
+			throw new IllegalArgumentException("El proyecto ya está finalizado");
+		}
 
+		LocalDate fechaFin = parsearFecha(fin);
+		if (fechaFin.isBefore(proyecto.getFechaInicio())) {
+			throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio");
+		}
+		proyecto.marcarComoFinalizado();
+	}
 }
