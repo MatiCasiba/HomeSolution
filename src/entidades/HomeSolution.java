@@ -268,4 +268,12 @@ public class HomeSolution implements IHomeSolution{
 	public Object[] empleadosNoAsignados() {
 		return empleados.values().stream().filter(Empleado::estaDisponible).toArray();
 	}
+	
+	@Override
+    public boolean estaFinalizado(Integer numero) {
+        Proyecto proyecto = proyectos.get(numero);
+        return proyecto != null && proyecto.getEstado().equals(Estado.finalizado);
+    }
+	
+	
 }
