@@ -142,4 +142,12 @@ public class HomeSolution {
 		return empleados.values().stream().filter(Empleado::estaDisponible).collect(Collectors.toList());
 	}
 	
+	public boolean empleadoTuvoRetrasos(int legajo) {
+		Empleado e = empleados.get(legajo);
+		if(e == null) {
+			throw new IllegalArgumentException("Empleado no encontrado");
+		}
+		return e.getRetrasosTotales() > 0;
+	}
+	
 }
