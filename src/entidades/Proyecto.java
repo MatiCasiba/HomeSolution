@@ -33,7 +33,7 @@ public class Proyecto {
 			throw new IllegalArgumentException("La fecha de inicio no puede ser nula");
 		}
 		if(tareas == null || tareas.isEmpty()) {
-			throw new IllegalArgumentException("El poryecto debe tener al menos una tarea");
+			throw new IllegalArgumentException("El proyecto debe tener al menos una tarea");
 		}
 		this.numeroProyecto = numeroProyecto;
 		this.cliente = cliente;
