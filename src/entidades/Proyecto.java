@@ -19,7 +19,7 @@ public class Proyecto {
 	private String estado;
 	private List<Empleado> historialEmpleados;
 	
-	public Proyecto(int numeroProyeccto, Cliente cliente, String direccion, LocalDate fehcaInicio, Map<String, Tarea> tarteas) {
+	public Proyecto(int numeroProyecto, Cliente cliente, String direccion, LocalDate fechaInicio, Map<String, Tarea> tarteas) {
 		if(numeroProyecto <= 0) {
 			throw new IllegalArgumentException("El número de proyecto debe ser mayor a 0");
 		}
