@@ -390,4 +390,28 @@ public class HomeSolution implements IHomeSolution{
 		return empleados.values().stream().filter(Empleado::estaDisponible)
 				.min(Comparator.comparingInt(Empleado::getRetrasosTotales)).orElse(null);
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("--- Home Solution ---\n");
+		if(proyectos.isEmpty()) {
+			sb.append("No hay proyectos registrados.\n");
+		} else {
+			for(Proyecto p : proyectos.values()) {
+				sb.append("\n----------------------------\n");
+				sb.append(p.toString()).append("\n");
+			}
+		}
+		
+		sb.append("\n--- Empleados Registrados ---\n ");
+		if(empleados.isEmpty()) {
+			sb.append("No hay empleados registrados.\n");
+		} else {
+			empleados.values().forEach(e -> sb.append(e.toString()).append("\n"));
+		}
+		
+		return sb.toString();
+		
+	}
 }
