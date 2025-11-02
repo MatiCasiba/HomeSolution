@@ -269,7 +269,10 @@ public class HomeSolution implements IHomeSolution{
 	
 	@Override
 	public Object[] empleadosNoAsignados() {
-		return empleados.values().stream().filter(Empleado::estaDisponible).toArray();
+	    return empleados.values().stream()
+	            .filter(Empleado::estaDisponible)
+	            .map(Empleado::getLegajo)  //solamente devuelve los legajos
+	            .toArray();
 	}
 	
 	@Override
