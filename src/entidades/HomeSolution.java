@@ -241,9 +241,10 @@ public class HomeSolution implements IHomeSolution{
 	
 	// CONSULTAS
 	@Override
-	public double costoProyecto() {
-        return proyectos.values().stream().mapToDouble(Proyecto::calcularCostoTaeas).sum();
-    }
+	public double costoProyecto(Integer numero) {
+		Proyecto proyecto = proyectos.get(numero);
+		return proyecto != null ? proyecto.calcularCostoTaeas() : 0.0;
+	}
 	
 	@Override
     public List<Tupla<Integer, String>> proyectosFinalizados() {
