@@ -14,14 +14,14 @@ public class Tarea {
 		if(titulo == null || titulo.isBlank()) {
 			throw new IllegalArgumentException("El titulo de la tarea no puede estar vacio");
 		}
-		if(descripcion == null || descripcion.isBlank()) {
+		if(descripcion == null) {
 			throw new IllegalArgumentException("La descripción no puede ser vacía");
 		}
 		if(diasNecesarios <= 0) {
-			throw new IllegalArgumentException("Los días necesarios deben ser mayor a 0");
+			diasNecesarios = 1;
 		}
 		this.titulo = titulo;
-		this.descripcion = descripcion;
+		this.descripcion = descripcion.isBlank() ? "Sin descripción" : descripcion;
 		this.diasNecesarios = diasNecesarios;
 		this.diasRetraso = 0;
 		this.empleadoAsignado = null;
@@ -68,13 +68,13 @@ public class Tarea {
 		}
 	}
 	
-	public void setDiasRetraso(int deasRetraso) {
+	public void setDiasRetraso(int diasRetraso) {
 		if(diasRetraso < 0) {
 			throw new IllegalArgumentException("Los días de retrasso no pueden ser negativos");
 		}
 		this.diasRetraso = diasRetraso;
 		if(empleadoAsignado != null && diasRetraso > 0) {
-			empleadoAsignado.registrarRetrasos(0, deasRetraso); // el proyecto se asigna mass adelante en HomeSolution
+			empleadoAsignado.registrarRetrasos(0, diasRetraso); // el proyecto se asigna mass adelante en HomeSolution
 		}
 	}
 	
