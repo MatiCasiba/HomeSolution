@@ -320,14 +320,9 @@ public class HomeSolution implements IHomeSolution{
 	}
 	
 	@Override
-	public boolean tieneRestrasos(String legajo) {
-		try {
-			Integer legajoInt = Integer.parseInt(legajo);
-			Empleado empleado = empleados.get(legajoInt);
-			return empleado != null && empleado.getRetrasosTotales() > 0;
-		} catch (NumberFormatException e) {
-			return false;
-		}
+	public boolean tieneRestrasos(Integer legajo) {
+		Empleado empleado = empleados.get(legajo);
+		return empleado != null && empleado.getRetrasosTotales() > 0;
 	}
 	
 	@Override
