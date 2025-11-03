@@ -113,15 +113,16 @@ public class Proyecto {
 	}
 	
 	public void marcarComoEnCurso() {
-		if(!estado.equals(Estado.pendiente)) {
-			throw new IllegalStateException("Solo se puede pasar a ACTIVO desde PENDIENTE");
+		// cambia de pendiente a activo (en curso)
+		if (estado.equals(Estado.pendiente)) {
+			boolean tieneAsignadas = tareas.values().stream().anyMatch(t -> t.getEmpleadoAsignado() != null);
+			//si ya hay alguna tarea asignada, lo ponemos como ACTIVO
+			if (tieneAsignadas) {
+				estado = Estado.activo;
+			}
 		}
-		boolean tieneAsignadas = tareas.values().stream().anyMatch(t -> t.getEmpleadoAsignado() != null);
-		if(tieneAsignadas) {
-			throw new IllegalStateException("No se puede iniciar un proyecto con tareas ya asignadas");
-		}
-		estado = Estado.activo;
 	}
+
 	
 	public void marcarComoFinalizado() {
 		if(estado.equals(Estado.finalizado)) {

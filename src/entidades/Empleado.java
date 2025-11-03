@@ -34,11 +34,17 @@ public abstract class Empleado {
 	}
 	
 	public void registrarRetrasos(int numProyecto, int dias) {
-		if(numProyecto <= 0) throw new IllegalArgumentException("Número de poryecto inválido");
-		if(dias < 0) throw new IllegalArgumentException("Los días de retraso no pueden ser negativos");
-		retrasosTotales += dias;
-		retrasosPorProyecto.merge(numProyecto, dias, Integer::sum);
+	    if (dias < 0) {
+	        throw new IllegalArgumentException("Los días de retraso no pueden ser negativos");
+	    }
+	    //si el número de proyecto es inválido, lo registro igual con una clave por defecto
+	    if (numProyecto <= 0) {
+	        numProyecto = 0;
+	    }
+	    retrasosTotales += dias;
+	    retrasosPorProyecto.merge(numProyecto, dias, Integer::sum);
 	}
+
 	
 	public int getLegajo() {
 		return legajo;

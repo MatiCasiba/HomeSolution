@@ -300,11 +300,18 @@ public class HomeSolution implements IHomeSolution{
 	// REQUERIMIENTOS NUEVOS
 	@Override
 	public Object[] tareasProyectoNoAsignadas(Integer numero) {
-		Proyecto proyecto = proyectos.get(numero);
-		if (proyecto == null) {
-			return new Object[0];
-		}
-		return proyecto.getTareas().values().stream().filter(t -> t.getEmpleadoAsignado() == null).toArray();
+	    Proyecto proyecto = proyectos.get(numero);
+	    if (proyecto == null) {
+	        throw new IllegalArgumentException("Proyecto inexistente");
+	    }
+
+	    if (proyecto.getEstado().equals(Estado.finalizado)) {
+	        throw new IllegalArgumentException("No se pueden consultar tareas de un proyecto finalizado");
+	    }
+
+	    return proyecto.getTareas().values().stream()
+	            .filter(t -> t.getEmpleadoAsignado() == null)
+	            .toArray();
 	}
 
 	@Override
