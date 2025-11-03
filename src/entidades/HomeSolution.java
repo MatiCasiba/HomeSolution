@@ -3,11 +3,13 @@ package entidades;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class HomeSolution implements IHomeSolution{
@@ -149,21 +151,20 @@ public class HomeSolution implements IHomeSolution{
 	
 	@Override
 	public void registrarRetrasoEnTarea(Integer numero, String titulo, double cantidadDias) {
-		Proyecto proyecto = obtenerProyectoValido(numero);
-		validarProyectoNoFinalizado(proyecto);
+	    Proyecto proyecto = obtenerProyectoValido(numero);
+	    validarProyectoNoFinalizado(proyecto);
 
-		Tarea tarea = obtenerTarea(proyecto, titulo);
+	    Tarea tarea = obtenerTarea(proyecto, titulo);
 
-		if (cantidadDias < 0) {
-			throw new IllegalArgumentException("Los días de retraso no pueden ser negativos");
-		}
+	    if (cantidadDias < 0) {
+	        throw new IllegalArgumentException("Los días de retraso no pueden ser negativos");
+	    }
 
-		tarea.setDiasRetraso((int) cantidadDias);
+	    tarea.setDiasRetraso((int) cantidadDias);
 
-		//registra retraso en el empleado si está asignado
-		if (tarea.getEmpleadoAsignado() != null) {
-			tarea.getEmpleadoAsignado().registrarRetrasos(numero, (int) cantidadDias);
-		}
+	    if (tarea.getEmpleadoAsignado() != null && cantidadDias > 0) {
+	        tarea.getEmpleadoAsignado().registrarRetrasos(numero, (int) cantidadDias);
+	    }
 	}
 	
 	@Override
@@ -401,9 +402,15 @@ public class HomeSolution implements IHomeSolution{
 	}
 	
 	private Empleado buscarEmpleadoMenosRetrasos() {
-	    return empleados.values().stream()
-	            .min(Comparator.comparingInt(Empleado::getRetrasosTotales))
-	            .orElse(null);
+	    for (int retrasosBuscados = 0; retrasosBuscados <= 2; retrasosBuscados++) {
+	        for (Empleado emp : empleados.values()) {
+	            if (emp.getRetrasosTotales() == retrasosBuscados) {
+	                return emp;
+	            }
+	        }
+	    }
+
+	    return empleados.values().iterator().next();
 	}
 
 	

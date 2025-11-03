@@ -69,13 +69,10 @@ public class Tarea {
 	}
 	
 	public void setDiasRetraso(int diasRetraso) {
-		if(diasRetraso < 0) {
-			throw new IllegalArgumentException("Los días de retrasso no pueden ser negativos");
-		}
-		this.diasRetraso = diasRetraso;
-		if(empleadoAsignado != null && diasRetraso > 0) {
-			empleadoAsignado.registrarRetrasos(0, diasRetraso); // el proyecto se asigna mass adelante en HomeSolution
-		}
+	    if(diasRetraso < 0) {
+	        throw new IllegalArgumentException("Los días de retraso no pueden ser negativos");
+	    }
+	    this.diasRetraso = diasRetraso;
 	}
 	
 	public void marcarComoTerminada() {
