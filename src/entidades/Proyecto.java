@@ -125,15 +125,31 @@ public class Proyecto {
 
 	
 	public void marcarComoFinalizado() {
-		if(estado.equals(Estado.finalizado)) {
-			throw new IllegalStateException("El proyecto ya está finalizado");
-		}
-		boolean hayIncompletas = tareas.values().stream().anyMatch(t -> t.estaTerminada());
-		if(hayIncompletas) {
-			throw new IllegalStateException("No se pude finalizar el proyecto: hay tareas sin terminar");
-		}
-		actualizarFechaFinReal();
-		estado = Estado.finalizado;
+	    if(estado.equals(Estado.finalizado)) {
+	        throw new IllegalStateException("El proyecto ya está finalizado");
+	    }
+	    
+	    // autotermina todas las tareas antes de finalizar el proyecto
+	    for (Tarea tarea : tareas.values()) {
+	        if (!tarea.estaTerminada()) {
+	            tarea.marcarComoTerminada();
+	            Empleado emp = tarea.getEmpleadoAsignado();
+	            if(emp != null && !historialEmpleados.contains(emp)) {
+	                historialEmpleados.add(emp);
+	            }
+	        }
+	    }
+	    
+	    actualizarFechaFinReal();
+	    
+	    // LIBERAR EMPLEADOS, pero marcarComoTerminada() ya los libera
+	    for (Tarea tarea : tareas.values()) {
+	        if (tarea.getEmpleadoAsignado() != null) {
+	            tarea.liberarEmpleado();
+	        }
+	    }
+	    
+	    estado = Estado.finalizado;
 	}
 	
 	public void marcarTareaTerminada(String tituloTarea) {

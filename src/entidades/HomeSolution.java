@@ -122,6 +122,7 @@ public class HomeSolution implements IHomeSolution{
 			throw new IllegalStateException("No hay empleados disponibles para asignar");
 		}
 		tarea.asignarEmpleado(empleado);
+		empleado.asignar();
 		proyecto.marcarComoEnCurso();
 	}
 	
@@ -137,8 +138,12 @@ public class HomeSolution implements IHomeSolution{
 		if (empleado == null) {
 			throw new IllegalStateException("No hay empleados disponibles para asignar");
 		}
+		if (!empleado.estaDisponible()) {
+	        empleado.liberar();
+	    }
 
 		tarea.asignarEmpleado(empleado);
+		empleado.asignar();
 		proyecto.marcarComoEnCurso();
 	}
 	
@@ -234,6 +239,9 @@ public class HomeSolution implements IHomeSolution{
 		if (nuevoEmpleado == null) {
 			throw new IllegalStateException("No hay empleados disponibles");
 		}
+		if (!nuevoEmpleado.estaDisponible()) {
+	        nuevoEmpleado.liberar();
+	    }
 
 		tarea.liberarEmpleado();
 		tarea.asignarEmpleado(nuevoEmpleado);
@@ -393,9 +401,11 @@ public class HomeSolution implements IHomeSolution{
 	}
 	
 	private Empleado buscarEmpleadoMenosRetrasos() {
-		return empleados.values().stream().filter(Empleado::estaDisponible)
-				.min(Comparator.comparingInt(Empleado::getRetrasosTotales)).orElse(null);
+	    return empleados.values().stream()
+	            .min(Comparator.comparingInt(Empleado::getRetrasosTotales))
+	            .orElse(null);
 	}
+
 	
 	@Override
 	public String toString() {

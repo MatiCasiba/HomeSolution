@@ -79,11 +79,11 @@ public class Tarea {
 	}
 	
 	public void marcarComoTerminada() {
-		if(terminada) {
-			throw new IllegalStateException("La tarea ya está finalizada");
-		}
-		terminada = true;
-		liberarEmpleado();
+	    if(terminada) {
+	        throw new IllegalStateException("La tarea ya está finalizada");
+	    }
+	    terminada = true;
+	    liberarEmpleado(); // esto libera al empleado automáticamente
 	}
 	
 	public double calcularCosto() {
