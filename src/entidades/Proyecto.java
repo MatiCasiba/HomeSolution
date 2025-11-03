@@ -85,18 +85,43 @@ public class Proyecto {
 		fechaFinEstimado = fechaInicio.plusDays(calcularDiasEstimados());
 	}
 	
+//	public double calcularCostoTaeas() {
+//		double total = 0;
+//		boolean hayRetraso = false;
+//		for(Tarea t: tareas.values()) {
+//			total += t.calcularCosto();
+//			if(t.getDiasRetraso() > 0) hayRetraso = true;
+//		}
+//		if(hayRetraso) {
+//			double recargo = (tieneRetrasosGraves() ? 0.35 : 0.25);
+//			total *= (1 + recargo);
+//		}
+//		return total;
+//	}
+	
 	public double calcularCostoTaeas() {
-		double total = 0;
-		boolean hayRetraso = false;
-		for(Tarea t: tareas.values()) {
-			total += t.calcularCosto();
-			if(t.getDiasRetraso() > 0) hayRetraso = true;
-		}
-		if(hayRetraso) {
-			double recargo = (tieneRetrasosGraves() ? 0.35 : 0.25);
-			total *= (1 + recargo);
-		}
-		return total;
+	    double total = 0;
+	    boolean hayRetraso = false;
+	    
+	    //si el proyecto está FINALIZADO, calcular basado en historial
+	    if (estado.equals(Estado.finalizado)) {
+	        for (Empleado emp : historialEmpleados) {
+	            //calcular costo aproximado por empleado
+	            total += emp.calcularSueldo() * (calcularDiasEstimados() / 30.0);
+	        }
+	    } else {
+	        //proyecto ACTIVO/PENDIENTE - calcula normalmente
+	        for(Tarea t: tareas.values()) {
+	            total += t.calcularCosto();
+	            if(t.getDiasRetraso() > 0) hayRetraso = true;
+	        }
+	    }
+	    
+	    if(hayRetraso) {
+	        double recargo = (tieneRetrasosGraves() ? 0.35 : 0.25);
+	        total *= (1 + recargo);
+	    }
+	    return total;
 	}
 	
 	private boolean tieneRetrasosGraves() {

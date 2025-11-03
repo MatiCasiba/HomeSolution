@@ -84,15 +84,15 @@ public class Tarea {
 	}
 	
 	public double calcularCosto() {
-		if(empleadoAsignado == null) {
-			return 0;
-		}
-		double costoBase = empleadoAsignado.calcularSueldo()*(diasNecesarios / 30.0 );
-		double recargo = 0;
-		if(diasRetraso > 0) {
-			recargo = (diasRetraso >= 5) ? 0.35 : 0.25;
-		}
-		return costoBase * (1+recargo);
+	    if(empleadoAsignado == null) {
+	        return 0;
+	    }
+	    double costoBase = empleadoAsignado.calcularSueldo()*(diasNecesarios / 30.0 );
+	    double recargo = 0;
+	    if(diasRetraso > 0) {
+	        recargo = (diasRetraso >= 5) ? 0.35 : 0.25;
+	    }
+	    return costoBase * (1+recargo);
 	}
 	
 	public String getClave() {
