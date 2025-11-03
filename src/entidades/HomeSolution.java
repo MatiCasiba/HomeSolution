@@ -3,13 +3,13 @@ package entidades;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class HomeSolution implements IHomeSolution{
@@ -62,44 +62,58 @@ public class HomeSolution implements IHomeSolution{
 	// REGISTRO Y GESTION DE PROYECTOS
 	@Override
 	public void registrarProyecto(String[] titulos, String[] descripcion, double[] dias, String domicilio,
-			String[] cliente, String inicio, String fin) {
-		validarDatosProyecto(titulos, descripcion, dias, domicilio, cliente, inicio, fin);
+	        String[] cliente, String inicio, String fin) {
+	    validarDatosProyecto(titulos, descripcion, dias, domicilio, cliente, inicio, fin);
 
-		// creo cliente
-		Cliente clienteObj = new Cliente(cliente[0], cliente[2], cliente[1]);
+	    // parseo fechas antes de validar
+	    LocalDate fechaInicio = parsearFecha(inicio);
+	    LocalDate fechaFin = parsearFecha(fin);
+	    
+	    // valido que la fecha fin no sea anteriror a la inicio
+	    if (fechaFin.isBefore(fechaInicio)) {
+	        throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio");
+	    }
 
-		// creo tareas
-		Map<String, Tarea> tareasMap = new HashMap<>();
-		for (int i = 0; i < titulos.length; i++) {
-			Tarea tarea = new Tarea(titulos[i], descripcion[i], (int) dias[i]);
-			tareasMap.put(tarea.getClave(), tarea);
-		}
+	    Cliente clienteObj = new Cliente(cliente[0], cliente[2], cliente[1]);
 
-		// parseo fechas
-		LocalDate fechaInicio = parsearFecha(inicio);
-		LocalDate fechaFin = parsearFecha(fin);
+	    Map<String, Tarea> tareasMap = new HashMap<>();
+	    for (int i = 0; i < titulos.length; i++) {
+	        Tarea tarea = new Tarea(titulos[i], descripcion[i], (int) dias[i]);
+	        tareasMap.put(tarea.getClave(), tarea);
+	    }
 
-		// creao proyecto
-		Proyecto proyecto = new Proyecto(contadorProyectos, clienteObj, domicilio, fechaInicio, tareasMap);
-		proyectos.put(contadorProyectos, proyecto);
-		contadorProyectos++;
+	    Proyecto proyecto = new Proyecto(contadorProyectos, clienteObj, domicilio, fechaInicio, tareasMap);
+	    proyectos.put(contadorProyectos, proyecto);
+	    contadorProyectos++;
 	}
 	
 	private void validarDatosProyecto(String[] titulos, String[] descripcion, double[] dias, String domicilio,
-			String[] cliente, String inicio, String fin) {
-		if (titulos == null || descripcion == null || dias == null || titulos.length == 0
-				|| titulos.length != descripcion.length || titulos.length != dias.length) {
-			throw new IllegalArgumentException("Los arrays de tareas deben tener la misma longitud y no ser vacíos");
-		}
-		if (domicilio == null || domicilio.isBlank()) {
-			throw new IllegalArgumentException("El domicilio no puede estar vacío");
-		}
-		if (cliente == null || cliente.length < 3) {
-			throw new IllegalArgumentException("El cliente debe tener nombre, email y teléfono");
-		}
-		if (inicio == null || fin == null) {
-			throw new IllegalArgumentException("Las fechas no pueden ser nulas");
-		}
+	        String[] cliente, String inicio, String fin) {
+	    if (titulos == null || descripcion == null || dias == null || 
+	        titulos.length == 0 || titulos.length != descripcion.length || 
+	        titulos.length != dias.length) {
+	        throw new IllegalArgumentException("Los arrays de tareas deben tener la misma longitud y no ser vacíos");
+	    }
+	    
+	    //valido que los días no sean negativos
+	    for (double dia : dias) {
+	        if (dia <= 0) {
+	            throw new IllegalArgumentException("Los días deben ser mayores a 0");
+	        }
+	    }
+	    
+	    if (domicilio == null || domicilio.isBlank()) {
+	        throw new IllegalArgumentException("El domicilio no puede estar vacío");
+	    }
+	    if (cliente == null || cliente.length < 3 || 
+	        cliente[0] == null || cliente[0].isBlank() ||
+	        cliente[1] == null || cliente[1].isBlank() ||
+	        cliente[2] == null || cliente[2].isBlank()) {
+	        throw new IllegalArgumentException("El cliente debe tener nombre, email y teléfono válidos");
+	    }
+	    if (inicio == null || fin == null) {
+	        throw new IllegalArgumentException("Las fechas no pueden ser nulas");
+	    }
 	}
 	
 	private LocalDate parsearFecha(String fecha) {
@@ -130,23 +144,24 @@ public class HomeSolution implements IHomeSolution{
 	
 	@Override
 	public void asignarResponsableMenosRetraso(Integer numero, String titulo) {
-		Proyecto proyecto = obtenerProyectoValido(numero);
-		validarProyectoNoFinalizado(proyecto);
+	    Proyecto proyecto = obtenerProyectoValido(numero);
+	    validarProyectoNoFinalizado(proyecto);
 
-		Tarea tarea = obtenerTarea(proyecto, titulo);
-		validarTareaNoAsignada(tarea);
+	    Tarea tarea = obtenerTarea(proyecto, titulo);
+	    validarTareaNoAsignada(tarea);
 
-		Empleado empleado = buscarEmpleadoMenosRetrasos();
-		if (empleado == null) {
-			throw new IllegalStateException("No hay empleados disponibles para asignar");
-		}
-		if (!empleado.estaDisponible()) {
+	    Empleado empleado = buscarEmpleadoMenosRetrasos();
+	    if (empleado == null) {
+	        throw new IllegalStateException("No hay empleados disponibles para asignar");
+	    }
+
+	    if (!empleado.estaDisponible()) {
 	        empleado.liberar();
 	    }
 
-		tarea.asignarEmpleado(empleado);
-		empleado.asignar();
-		proyecto.marcarComoEnCurso();
+	    tarea.asignarEmpleado(empleado);
+	    empleado.asignar();
+	    proyecto.marcarComoEnCurso();
 	}
 	
 	@Override
@@ -162,6 +177,7 @@ public class HomeSolution implements IHomeSolution{
 
 	    tarea.setDiasRetraso((int) cantidadDias);
 
+	    //registrar retrasos en el empleado asignado
 	    if (tarea.getEmpleadoAsignado() != null && cantidadDias > 0) {
 	        tarea.getEmpleadoAsignado().registrarRetrasos(numero, (int) cantidadDias);
 	    }
@@ -192,16 +208,19 @@ public class HomeSolution implements IHomeSolution{
 	
 	@Override
 	public void finalizarProyecto(Integer numero, String fin) {
-		Proyecto proyecto = obtenerProyectoValido(numero);
-		if (proyecto.getEstado().equals(Estado.finalizado)) {
-			throw new IllegalArgumentException("El proyecto ya está finalizado");
-		}
+	    Proyecto proyecto = obtenerProyectoValido(numero);
+	    if (proyecto.getEstado().equals(Estado.finalizado)) {
+	        throw new IllegalArgumentException("El proyecto ya está finalizado");
+	    }
 
-		LocalDate fechaFin = parsearFecha(fin);
-		if (fechaFin.isBefore(proyecto.getFechaInicio())) {
-			throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio");
-		}
-		proyecto.marcarComoFinalizado();
+	    LocalDate fechaFin = parsearFecha(fin);
+	    
+	    // valido que la fecha fin no sea anteriror a la inicio
+	    if (fechaFin.isBefore(proyecto.getFechaInicio())) {
+	        throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio");
+	    }
+	    
+	    proyecto.marcarComoFinalizado();
 	}
 	
 	// REASIGNACIÓN DE EMPLEADOS
@@ -298,12 +317,27 @@ public class HomeSolution implements IHomeSolution{
 	
 	@Override
 	public List<Tupla<Integer, String>> empleadosAsignadosAProyecto(Integer numero) {
-		Proyecto proyecto = proyectos.get(numero);
-		if (proyecto == null) {
-			return Collections.emptyList();
-		}
-		return proyecto.obtenerHistorialEmpleados().stream().distinct()
-				.map(e -> new Tupla<>(e.getLegajo(), e.getNombre())).collect(Collectors.toList());
+	    Proyecto proyecto = proyectos.get(numero);
+	    if (proyecto == null) {
+	        return Collections.emptyList();
+	    }
+	    
+	    //combino empleados del historial + empleados actualmente asignados
+	    Set<Empleado> todosEmpleados = new HashSet<>();
+	    
+	    //empleados del historial (proyectos finalizados)
+	    todosEmpleados.addAll(proyecto.obtenerHistorialEmpleados());
+	    
+	    //empleados actualmente asignados a tareas (proyectos activos/pendientes)
+	    proyecto.getTareas().values().stream()
+	        .filter(t -> t.getEmpleadoAsignado() != null)  //solo tareas con empleado asignado
+	        .map(Tarea::getEmpleadoAsignado)
+	        .forEach(todosEmpleados::add);
+	    
+	    return todosEmpleados.stream()
+	            .distinct()  // Por si hay duplicados
+	            .map(e -> new Tupla<>(e.getLegajo(), e.getNombre()))
+	            .collect(Collectors.toList());
 	}
 	
 	// REQUERIMIENTOS NUEVOS
@@ -402,17 +436,11 @@ public class HomeSolution implements IHomeSolution{
 	}
 	
 	private Empleado buscarEmpleadoMenosRetrasos() {
-	    for (int retrasosBuscados = 0; retrasosBuscados <= 2; retrasosBuscados++) {
-	        for (Empleado emp : empleados.values()) {
-	            if (emp.getRetrasosTotales() == retrasosBuscados) {
-	                return emp;
-	            }
-	        }
-	    }
-
-	    return empleados.values().iterator().next();
+	    return empleados.values().stream()
+	            .filter(Empleado::estaDisponible)
+	            .min(Comparator.comparingInt(Empleado::getRetrasosTotales))
+	            .orElse(null);
 	}
-
 	
 	@Override
 	public String toString() {

@@ -90,7 +90,7 @@ public class Proyecto {
 		boolean hayRetraso = false;
 		for(Tarea t: tareas.values()) {
 			total += t.calcularCosto();
-			if(t.getDiasNecesarios() > 0) hayRetraso = true;
+			if(t.getDiasRetraso() > 0) hayRetraso = true;
 		}
 		if(hayRetraso) {
 			double recargo = (tieneRetrasosGraves() ? 0.35 : 0.25);
@@ -141,14 +141,6 @@ public class Proyecto {
 	    }
 	    
 	    actualizarFechaFinReal();
-	    
-	    // LIBERAR EMPLEADOS, pero marcarComoTerminada() ya los libera
-	    for (Tarea tarea : tareas.values()) {
-	        if (tarea.getEmpleadoAsignado() != null) {
-	            tarea.liberarEmpleado();
-	        }
-	    }
-	    
 	    estado = Estado.finalizado;
 	}
 	
