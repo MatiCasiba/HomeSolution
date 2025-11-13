@@ -1,3 +1,6 @@
+# HOME SOLUTION
+Explicaré los métodos de la clase de HomeSolution.java y como se relaciona con las demás clases para que funcione el programa.
+
 # Gestión de empleados
 
 ## registrarEmpleado(String nombre, double valor)
