@@ -9,9 +9,9 @@ Este método registra un empleado contratado por horas
 ### Flujo:
 ```java
 HomeSolution.registrarEmpleado()
-  generarLegajo()
-  new EmpleadoContratado()
-  empleado.put(legajo, empleado)
+  → generarLegajo()
+  → new EmpleadoContratado()
+  → empleado.put(legajo, empleado)
 ```
 
 ## registrarEmpleado(String nombre, double valor, String nombre, double valor, String categoria)
@@ -23,9 +23,9 @@ Registrar un empleado de planta con categoría, se relaciona con laas clases Emp
 ### Flujo:
 ```java
 HomeSolution.RegistrarEmpleado()
-  generarLegajo()
-  new EmpleadoPlanta()
-  empleados.put(legajo, empleado)
+  → generarLegajo()
+  → new EmpleadoPlanta()
+  → empleados.put(legajo, empleado)
 ```
 
 ## generarLegajo() --> Método privado
@@ -65,13 +65,13 @@ Este método crea un nuevo proyecto con todas sus tareas y datos
 ### Flujo:
 ```java
 HomeSolution.registrarProyecto()
-  validarDatosProyecto()
-  parsearFecha(inicio), parsearFecha(fin)
-  new Cliente(cliente[0], cliente[2], cliente[1])
-  for --> new Tarea() para cada tarea
-  new Proyecto(contadorProyectos, clienteObj, direccion, fecchaIniciao, tareasMap)
-  proyectos.put(contadorProyectos, proyecto)
-  contadorProyectos++
+  → validarDatosProyecto()
+  → parsearFecha(inicio), parsearFecha(fin)
+  → new Cliente(cliente[0], cliente[2], cliente[1])
+  → for --> new Tarea() para cada tarea
+  → new Proyecto(contadorProyectos, clienteObj, direccion, fecchaIniciao, tareasMap)
+  → proyectos.put(contadorProyectos, proyecto)
+  → contadorProyectos++
 ```
 
 ## validarDatosProyecto() --> Método privado
@@ -93,10 +93,10 @@ Va a marcar un proyecto como finalizado
 ### Flujo:
 ```java
 HomeSolution.finalizarProyecto()
-  obtenerProyectoValido()
-  Proyecto.getEstado() --> veriica si no está finalizado
-  parsearFecha(fin)
-  Proyecto.marcarComoFinalizado()
+  → obtenerProyectoValido()
+  → Proyecto.getEstado() --> veriica si no está finalizado
+  → parsearFecha(fin)
+  → Proyecto.marcarComoFinalizado()
 ```
 
 ## estaFinalizado(Integer numero)
@@ -124,14 +124,14 @@ Asigna un empleado disponible a una tarea
 ### Flujo
 ```java
 HomeSolution.asignarResponsableEnTarea()
-  obtenerProyectoValido()
-  validarProyectoNoFinalizado()
-  obtenerTarea(proyecto, titulo)
-  validarTareaNoAsignada()
-  buscarEmpleoDisponible()
-  Tarea.asignaarEmpleado(empleado)
-  Empleado.asignar() --> cambia estado a no disponioble
-  Proyecto.marcarComoEnCurso()
+  → obtenerProyectoValido()
+  → validarProyectoNoFinalizado()
+  → obtenerTarea(proyecto, titulo)
+  → validarTareaNoAsignada()
+  → buscarEmpleoDisponible()
+  → Tarea.asignaarEmpleado(empleado)
+  → Empleado.asignar() --> cambia estado a no disponioble
+  → Proyecto.marcarComoEnCurso()
 ```
 
 ## asignarResponsableMenosRetraso(Integer numero, Stgring titulo)
@@ -206,8 +206,8 @@ Este obtiene todos los empleados que han trabajado en un proyecto
 ```java
 empleados_historial(proyectos finalizados)
   + empleados_ actuales (tarea asignadas)
-  Set<Empleado> (sin duplicados)
-  List<Tupla<legajo, nombre>>
+  → Set<Empleado> (sin duplicados)
+  → List<Tupla<legajo, nombre>>
 ```
 
 ## empleadosNoAsignados()
@@ -222,4 +222,43 @@ Consulta retrasos totales de un empleado
 
 ## tieneRetrasos(Integer legajo)
 Esto verifica si un empleado tiene retrasos registrados
-* Empleado-getRetrasosTotales() > 0: condición booleana simple
+* Empleado.getRetrasosTotales() > 0: condición booleana simple
+
+# Reasignación de Empleados
+
+## reasignarEmpleadosEnProyecto(Integeer numero, Integer legajo, String titulo):
+Este emétodo reemplaza el empleado asignado a una tareas por uno específico
+* Tarea.liberarEmpleado(): libera al empleado actual
+* Tarea.asignarEmpleado(): asigna el nuevo empleado
+* Empleado.estaDisponible(): verifica disponibilidad del nuevo empleado
+
+### Fujo
+```java
+HomeSolution.reasginarEmpleadoEnProyecto()
+  → obtenerProyectoValido()
+  → validarProyectoNoFinalizado()
+  → obtenerTarea(proyecto, titulo)
+  → validarTareaTieneEmpleado() --> implícito
+  → obtenerEmpleado(legajo)
+  → Tarea.liberarEmpleado() --> libera al anteriror
+  → Tarea.asignarEmpleado(nuevo) --> asigna el nuevo
+```
+
+## reasignarEmpleadoConMenosRetraso(Integer numero, String titulo)
+Reasigna la tarea al empleado con menos retrasos acumulados
+* bucarEmpleadoMenosRetrasos(): encuentra el empleado óptimo
+* Empleado.liberar(): libera al nuevo empleado si no está disponible
+* Misma lógica base: similr al método anteriror pero con selección automática
+
+### Flujo
+```java
+HomeSolution.reasignarEmpeladoConMenosRetraso()
+  → obtenerProyectoValido()
+  → validarProyectoNoFinalizado()
+  → obtenerTarea(proyecto, titulo)
+  → validarTareaTieneEmpleado()
+  → buscarEmpleadoMenosRetrasos()
+  → Empleado.liberar() --> si no está disponible
+  → Tarea.liberarEmpleado()
+  → Tarea.asignarEmpleado(nuevo)
+```
