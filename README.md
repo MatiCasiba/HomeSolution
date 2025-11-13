@@ -167,3 +167,59 @@ Obtiene todas las tareas de un proyecto
 Obtiene tareas sin empelado asignado
 * Tarea.getEmpleadosAsignado(): Filtra tareas sin asignar (null)
 * Proyecto.getEstado(): valida que el proyecto no esté finalizado
+
+# Consultas y reportes
+
+## costoProyecto(Integer numero)
+Esto calcula el costo total de un proyecto
+* Proyecto.calcularCostoTareas(): delega el cálculo al proyecto
+* Lógica diferenciada: Maneja proyectos finalizados vs activos/pendientes
+
+Su comportamiento según estado:
+* Proyectos ACTIVOS/PENDIENTES: calcula costo basado en tareas actuales
+* Proyectos FINALIZADOS: calcula costo basado en historial de empleados
+
+## proyectosFinalizados():
+lista todos los proyectos finalizados
+* Proyecto.getEstado(): filtra por Estado.finalizado
+* Tupla<Integer, String>: retorna (numero_proyecto, direccion)
+* Stream API: Filtra y transforma la colección
+
+## proyectosPendientes()
+Esto lista proyectos en estado pendiente
+* Estado.pendiente: Constante para filtrar
+* Proyecto.getDireccion(): Obtiene la dirección para la tupla
+
+## proyectosActivos()
+Este método lista proyectos en ejecución
+* Estado.activo: constante para filtrar
+* Mismo patrón: similar a proyectosFinalizados() pero con diferente filtro
+
+## empleadosAsignadosAProyecto(Integer numero)
+Este obtiene todos los empleados que han trabajado en un proyecto
+* Proyecto.obtenerHistorialEmpleados(): empleados de proyectos finalizados
+* Tarea.getEmpleadoAsignado(): empleados actualmente asignados
+* Set<Empleado>: combian y elimina duplicados
+* Empleado.getLegajo(), Empleado.getNombre(): datos para la tupla
+
+### Fujo
+```java
+empleados_historial(proyectos finalizados)
+  + empleados_ actuales (tarea asignadas)
+  Set<Empleado> (sin duplicados)
+  List<Tupla<legajo, nombre>>
+```
+
+## empleadosNoAsignados()
+Me da los empleados disponibles (sin tareas asignadas)
+* Empleados.estaDisponible(): filtra por estado del empleado
+* Retorna solo legajos: Object[] con números de legajo
+
+## consultarCantidadRetrasosEmpleado(Integer legajo)
+Consulta retrasos totales de un empleado
+* Empleado.getRetrasosTotales(): Obtiene el contador acumulado
+* Map<Integer, Empleado> empleados: busca por legajo
+
+## tieneRetrasos(Integer legajo)
+Esto verifica si un empleado tiene retrasos registrados
+* Empleado-getRetrasosTotales() > 0: condición booleana simple
