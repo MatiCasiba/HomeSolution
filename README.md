@@ -111,3 +111,59 @@ Este método va aobtener la representación en string del proyecto
 ## consultarDomicilioProyecto(Integer numero)
 Obtiene la dirección de un proyecto
 * Proyecto.getDireccion(): método getter del proyecto
+
+# Gestión de tareas
+
+## asignarResponsableEnTarea(Integer numero, String titulo)
+Asigna un empleado disponible a una tarea
+* Proyecto: obtiene el proyecto específico
+* Tarea: Obtiene la tarea específica dentro del proyecto
+* Empleado: Busca un empleado disponible y lo asigna
+* Estado: Cambia el estado del proyecto a ACTIVO si es necesario
+
+### Flujo
+```java
+HomeSolution.asignarResponsableEnTarea()
+  obtenerProyectoValido()
+  validarProyectoNoFinalizado()
+  obtenerTarea(proyecto, titulo)
+  validarTareaNoAsignada()
+  buscarEmpleoDisponible()
+  Tarea.asignaarEmpleado(empleado)
+  Empleado.asignar() --> cambia estado a no disponioble
+  Proyecto.marcarComoEnCurso()
+```
+
+## asignarResponsableMenosRetraso(Integer numero, Stgring titulo)
+Esto asigna el empleado con menos retrasos a una tarea
+* Empleado.getRetrasosTotales(): para comparar retrasos entre empleados
+* Comparator.comparingInt(): ordena empleados por menor retraso
+* Empleado.liberar(): libera al empleado si no está disponible
+
+## registrarRetrasoEnTarea(Integer numero, String titulo, double cantidadDias)
+Este método va a registrar días de retraso en una tarea
+* Tarea.setDiasRetraso(): Establece los días de retraso en la tarea
+* Empleado.registrarRetrasos(): registra los restrasos del empleado asignado
+* Proyecto.numeroProyecto: pasa el número de proyecto para registro
+
+## agregarTareaEnProyecto(Integer numero, String titulo, String descripción, double dias)
+Agrega una nueva tarea a un proyecto existente
+* Tarea: Crea una nueva instancia de tarea
+* Proyecto.agregarTarea(): delega la adición al proyceto
+* Proyecto.getTareas(): El proyecto maneja su propio mapa de tareas
+
+## finalizarTarea(Integer numero, String titulo)
+Marca una tarea específica como terminada
+* Tarea.estaTermninada(): Vertifica si ya está finaliada
+* Proyecto.marcarTareaTerminada(): delega la finalización al proyecto
+* Tarea.marcarComoTerminada(): La tarea maneja su propia lógica de finalización
+
+## tareasDeUnProyecto(Integer numero)
+Obtiene todas las tareas de un proyecto
+* Poryecto.getTareas().values(): obtiene la colección de tareas
+* toArray(): convierte a array para retornar
+
+## tareasProyectoNoAsignadas(Integer numero)
+Obtiene tareas sin empelado asignado
+* Tarea.getEmpleadosAsignado(): Filtra tareas sin asignar (null)
+* Proyecto.getEstado(): valida que el proyecto no esté finalizado
