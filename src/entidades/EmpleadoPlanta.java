@@ -28,12 +28,14 @@ public class EmpleadoPlanta extends Empleado {
 	
 	@Override
 	public double calcularSueldo() {
+		int diasTrabajados;
 		switch(categoria) {
-			case "INICIAL": return valorDia * 20;
-			case "TECNICO": return valorDia * 25;
-			case "EXPERTO": return valorDia * 30;
-			default: return valorDia * 20; // fallback
+			case "INICIAL": diasTrabajados = 20; break;
+			case "TECNICO": diasTrabajados = 25; break;
+			case "EXPERTO": diasTrabajados = 30; break;
+			default: diasTrabajados = 20;
 		}
+		return valorDia * diasTrabajados;
 	}
 	
 	@Override
