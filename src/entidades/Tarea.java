@@ -87,12 +87,18 @@ public class Tarea {
 	    if(empleadoAsignado == null) {
 	        return 0;
 	    }
-	    double costoBase = empleadoAsignado.calcularSueldo()*(diasNecesarios / 30.0 );
-	    double recargo = 0;
-	    if(diasRetraso > 0) {
-	        recargo = (diasRetraso >= 5) ? 0.35 : 0.25;
+	    int diasRealesTrabajados = diasNecesarios + diasRetraso;
+	    //para los cotnratados: costo por hora * horas trabajadas
+	    if(empleadoAsignado instanceof EmpleadoContratado) {
+	    	EmpleadoContratado ec = (EmpleadoContratado) empleadoAsignado;
+	    	return ec.getValorHora() * 8 * diasRealesTrabajados;
 	    }
-	    return costoBase * (1+recargo);
+	    //para los de planta: costo por día * días trabajados
+	    else if(empleadoAsignado instanceof EmpleadoPlanta) {
+	    	EmpleadoPlanta ep = (EmpleadoPlanta) empleadoAsignado;
+	    	return ep.getValorDia() * diasRealesTrabajados;
+	    }
+	    return 0;
 	}
 	
 	public String getClave() {
