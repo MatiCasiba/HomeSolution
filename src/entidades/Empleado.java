@@ -75,7 +75,7 @@ public abstract class Empleado {
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) return true;
-		if(!(obj instanceof Empleado)) return false;
+		if(obj == null || getClass() != obj.getClass()) return false;
 		Empleado other = (Empleado) obj;
 		return legajo == other.legajo;
 	}

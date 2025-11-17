@@ -213,7 +213,7 @@ public class Proyecto {
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) return true;
-		if(!(obj instanceof Proyecto)) return false;
+		if(obj == null || getClass() != obj.getClass()) return false;
 		Proyecto other = (Proyecto) obj;
 		return this.numeroProyecto == other.numeroProyecto;
 	}

@@ -107,7 +107,7 @@ public class Tarea {
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) return true;
-		if(!(obj instanceof Tarea)) return false;
+		if(obj == null || getClass() != obj.getClass()) return false;
 		Tarea other = (Tarea) obj;
 		return titulo.equalsIgnoreCase(other.titulo);
 	}
