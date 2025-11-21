@@ -89,31 +89,16 @@ public class HomeSolution implements IHomeSolution{
 	
 	private void validarDatosProyecto(String[] titulos, String[] descripcion, double[] dias, String domicilio,
 	        String[] cliente, String inicio, String fin) {
-	    if (titulos == null || descripcion == null || dias == null || 
-	        titulos.length == 0 || titulos.length != descripcion.length || 
-	        titulos.length != dias.length) {
-	        throw new IllegalArgumentException("Los arrays de tareas deben tener la misma longitud y no ser vacíos");
-	    }
+	    Proyecto.validarArraysTareas(titulos, descripcion, dias);
+	    Proyecto.validarDomicilio(domicilio);
+	    Cliente.validarDatosCliente(cliente);
 	    
-	    //valido que los días no sean negativos
-	    for (double dia : dias) {
-	        if (dia <= 0) {
-	            throw new IllegalArgumentException("Los días deben ser mayores a 0");
-	        }
+	    if(inicio == null || fin == null) {
+	    	throw new IllegalArgumentException("Las fechas no puden ser nulas");
 	    }
-	    
-	    if (domicilio == null || domicilio.isBlank()) {
-	        throw new IllegalArgumentException("El domicilio no puede estar vacío");
-	    }
-	    if (cliente == null || cliente.length < 3 || 
-	        cliente[0] == null || cliente[0].isBlank() ||
-	        cliente[1] == null || cliente[1].isBlank() ||
-	        cliente[2] == null || cliente[2].isBlank()) {
-	        throw new IllegalArgumentException("El cliente debe tener nombre, email y teléfono válidos");
-	    }
-	    if (inicio == null || fin == null) {
-	        throw new IllegalArgumentException("Las fechas no pueden ser nulas");
-	    }
+	    LocalDate fechaInicio = parsearFecha(inicio);
+	    LocalDate fechaFin = parsearFecha(fin);
+	    Proyecto.validarFechas(fechaInicio, fechaFin);
 	}
 	
 	private LocalDate parsearFecha(String fecha) {
