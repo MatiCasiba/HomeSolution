@@ -4,9 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Proyecto {
 	private int numeroProyecto;
@@ -168,6 +171,58 @@ public class Proyecto {
 			total += t.getDiasNecesarios();
 		}
 		return total;
+	}
+	
+	public boolean estaFinalizado() {
+		return estado.equals(Estado.finalizado);
+	}
+	
+	public boolean tieneTareaConTitulo(String titulo) {
+		return tareas.containsKey(titulo.toLowerCase().trim());
+	}
+	
+	public Tarea obtenerTarea(String titulo) {
+		Tarea tarea = tareas.get(titulo.toLowerCase().trim());
+		if(tarea == null) {
+			throw new IllegalArgumentException("Tarea no encontrada: " + titulo);
+		}
+		return tarea;
+	}
+	
+	public boolean puedeSerModificado() {
+		return !estaFinalizado();
+	}
+	
+	public void validarQuePuedeModificarse() {
+		if(!puedeSerModificado()) {
+			throw new IllegalStateException("El proyecto está finalizado y no puede modificarse");
+		}
+	}
+	
+	//obtengo todos los empleados asignados al proyecto (historial+actuales)
+	public List<Empleado> obtenerEmpleadosAsignados(){
+		Set<Empleado> empleados = new HashSet<>();
+		empleados.addAll(historialEmpleados); // empleados del historial (proyectos finalizados)
+		
+		//empleados actualmente asignados a tareas
+		tareas.values().stream()
+			.filter(t -> t.getEmpleadoAsignado() != null)
+			.map(Tarea::getEmpleadoAsignado)
+			.forEach(empleados::add);
+		
+		return new ArrayList<>(empleados);
+	}
+	
+	// obtengo las tareas no asignadas del proyecto
+	public List<Tarea> obtenerTareasNoAsignadas(){
+		return tareas.values().stream()
+				.filter(t -> t.getEmpleadoAsignado() == null)
+				.collect(Collectors.toList());
+	}
+	
+	// obtengo todas las tareas del proyecto
+	public List<Tarea> obtenerTodasLasTareas(){
+		return new ArrayList<>(tareas.values());
 	}
 	
 	@Override
