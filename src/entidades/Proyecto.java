@@ -228,6 +228,35 @@ public class Proyecto {
 		return new ArrayList<>(tareas.values());
 	}
 	
+	public static void validarArraysTareas(String[] titulos, String[] descripcion, double[] dias) {
+		if(titulos == null || descripcion == null || dias == null ||
+				titulos.length == 0 || titulos.length != descripcion.length ||
+				titulos.length != dias.length) {
+				throw new IllegalArgumentException("Los arrays de tareas deben tener la misma longitud y no ser vacíos");	
+		}
+		
+		for(double dia : dias) {
+			if(dia <= 0) {
+				throw new IllegalArgumentException("Los días deben ser mayores a 0");
+			}
+		}
+	}
+	
+	public static void validarDomicilio(String domicilio) {
+		if(domicilio == null || domicilio.isBlank()) {
+			throw new IllegalArgumentException("El domicilio no puede estar vacío");
+		}
+	}
+	
+	public static void validarFechas(LocalDate fechaInicio, LocalDate fechaFin) {
+		if(fechaInicio == null || fechaFin == null) {
+			throw new IllegalArgumentException("Las fechas no pueden ser nulas");
+		}
+		if(fechaFin.isBefore(fechaInicio)) {
+			throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha inicio");
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return String.format(
