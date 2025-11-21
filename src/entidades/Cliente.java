@@ -25,6 +25,15 @@ public class Cliente {
 		this.email = email;
 	}
 	
+	public static void validarDatosCliente(String[] cliente) {
+		if(cliente == null || cliente.length < 3 ||
+				cliente[0] == null || cliente[0].isBlank() ||
+				cliente[1] == null || cliente[1].isBlank() ||
+				cliente[2] == null || cliente[2].isBlank()) {
+				throw new IllegalArgumentException("El cliente debe tener nombre, email y teléfono válidos");
+		}
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
