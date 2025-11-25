@@ -160,7 +160,7 @@ public class HomeSolution implements IHomeSolution{
 	        throw new IllegalArgumentException("Los días de retraso no pueden ser negativos");
 	    }
 
-	    tarea.setDiasRetraso((int) cantidadDias);
+	    tarea.acumularRetraso((int) cantidadDias);
 
 	    //registrar retrasos en el empleado asignado
 	    if (tarea.getEmpleadoAsignado() != null && cantidadDias > 0) {

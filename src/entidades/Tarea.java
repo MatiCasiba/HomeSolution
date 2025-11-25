@@ -68,11 +68,11 @@ public class Tarea {
 		}
 	}
 	
-	public void setDiasRetraso(int diasRetraso) {
-	    if(diasRetraso < 0) {
+	public void acumularRetraso(int diasRetrasoAdicional) {
+	    if(diasRetrasoAdicional < 0) {
 	        throw new IllegalArgumentException("Los días de retraso no pueden ser negativos");
 	    }
-	    this.diasRetraso = diasRetraso;
+	    this.diasRetraso += diasRetrasoAdicional;
 	}
 	
 	public void marcarComoTerminada() {
