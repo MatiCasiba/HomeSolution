@@ -253,7 +253,7 @@ public class HomeSolution implements IHomeSolution{
 	@Override
 	public double costoProyecto(Integer numero) {
 		Proyecto proyecto = proyectos.get(numero);
-		return proyecto != null ? proyecto.calcularCostoTaeas() : 0.0;
+		return proyecto != null ? proyecto.getCostoProyecto() : 0.0;
 	}
 	
 	@Override

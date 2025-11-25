@@ -22,6 +22,8 @@ public class Proyecto {
 	private LocalDate fechaFinReal;
 	private String estado;
 	private List<Empleado> historialEmpleados;
+	private double costoCache;
+	private boolean costoCalculado;
 	
 	public Proyecto(int numeroProyecto, Cliente cliente, String direccion, LocalDate fechaInicio, Map<String, Tarea> tareas) {
 		if(numeroProyecto <= 0) {
@@ -78,6 +80,14 @@ public class Proyecto {
 		return Collections.unmodifiableList(historialEmpleados);
 	}
 	
+	public double getCostoProyecto() {
+		if(!costoCalculado) {
+			costoCache = calcularCostoTareas();
+			costoCalculado = true;
+		}
+		return costoCache;
+	}
+	
 	public void agregarTarea(Tarea tarea) {
 		if(tarea == null) {
 			throw new IllegalArgumentException("La tarea no puede ser nula");
@@ -87,9 +97,10 @@ public class Proyecto {
 		}
 		tareas.put(tarea.getClave(), tarea);
 		fechaFinEstimado = fechaInicio.plusDays(calcularDiasEstimados());
+		costoCalculado = false; // invalido cache
 	}
 	
-	public double calcularCostoTaeas() {
+	public double calcularCostoTareas() {
 	    double total = 0;
 	    boolean hayRetraso = false;
 	    
@@ -166,6 +177,8 @@ public class Proyecto {
 				historialEmpleados.add(emp);
 			}
 		}
+		
+		costoCalculado = false;
 	}
 	
 	private int calcularDiasEstimados() {
