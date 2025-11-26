@@ -16,8 +16,8 @@ public class Cliente {
 		if(email == null || email.isBlank()) {
 			throw new IllegalArgumentException("El email no puede estar vacío");
 		}
-		if(!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}$")){
-			throw new IllegalArgumentException("El formato del mail no es válido ");
+		if(!email.contains("@") || !email.contains(".")){
+			throw new IllegalArgumentException("El formato del mail no es válido");
 		}
 		
 		this.nombre = nombre;
